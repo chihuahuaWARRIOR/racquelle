@@ -1,115 +1,60 @@
-/* === racquelle – Styles (Bauhaus-inspiriert) === */
+:root{
+  --blue:#005BBB; --red:#D00000; --yellow:#FFD500; --green:#1B4D3E;
+  --bg:#ffffff; --ui-black:#111111; --muted:#e6e6e6;
+  --card-shadow: 0 8px 28px rgba(17,17,17,0.06);
+}
+*{box-sizing:border-box;font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; margin:0;}
+body{min-height:100vh;background:var(--bg);color:var(--ui-black);display:flex;flex-direction:column}
+.topbar{height:64px;display:flex;align-items:center;justify-content:space-between;padding:10px 18px;border-bottom:1px solid #f0f0f0}
+.logo{font-weight:700;text-transform:lowercase;letter-spacing:1px}
+.controls{display:flex;gap:14px;align-items:center}
+.lang{cursor:pointer;padding:6px 10px;border-radius:8px;border:1px solid #eee;background:#fff}
 
-:root {
-  --blue: #0058a3;
-  --red: #d7261e;
-  --yellow: #f7d117;
-  --green: #2e6e32;
-  --bg: #ffffff;
-  --text: #111111;
-  --gray: #cccccc;
+/* main quiz area uses full viewport height minus header/footer */
+main#main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px;gap:18px}
+
+/* Quiz grid: 2x2 quadrants and centered question box */
+#quiz{width:100%;max-width:1100px;height:68vh;min-height:520px;position:relative;display:block;background:transparent}
+.question-box{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:5;
+  background:rgba(255,255,255,0.95);padding:18px 22px;border-radius:10px;box-shadow:var(--card-shadow);max-width:640px;text-align:center
+}
+.question-inner{font-size:18px;line-height:1.35;color:var(--ui-black)}
+
+/* quadrants cover each quarter of the quiz area */
+.quad{position:absolute;width:49%;height:49%;display:flex;align-items:center;justify-content:center;padding:18px;border-radius:12px;color:#fff;font-weight:700;text-align:center;cursor:pointer;transition:transform .16s ease,filter .18s}
+.quad:active{transform:scale(.995)}
+.quad-tl{left:0;top:0;background:var(--blue);border-top-left-radius:14px}
+.quad-tr{right:0;top:0;background:var(--red);border-top-right-radius:14px}
+.quad-bl{left:0;bottom:0;background:var(--yellow);color:#111;border-bottom-left-radius:14px}
+.quad-br{right:0;bottom:0;background:var(--green);border-bottom-right-radius:14px}
+
+/* small overlay label inside quad (option text) */
+.quad .label{padding:12px 14px;border-radius:8px;background:rgba(255,255,255,0.06);max-width:92%;font-size:16px}
+
+/* progress dots */
+.progress-dots{display:flex;gap:6px;align-items:center;justify-content:center;flex-wrap:wrap;width:100%;max-width:680px}
+.progress-dot{width:14px;height:6px;background:var(--muted);border-radius:3px;transition:background .18s}
+.progress-dot.active{background:var(--ui-black)}
+
+/* result styling */
+.result{max-width:900px;background:#fff;padding:18px;border-radius:12px;box-shadow:var(--card-shadow)}
+.style-summary{padding:12px;border-radius:8px;background:#fbfbfb;border:1px solid #f0f0f0;margin-bottom:12px}
+.topRec,.topRec *{box-sizing:border-box}
+.topRec{display:flex;gap:14px;align-items:flex-start;margin-bottom:12px}
+.topRec img{width:160px;height:auto;border-radius:8px;object-fit:cover;border:1px solid #eee}
+.topMeta h3{margin:0 0 6px 0}
+.alt-list .alt{padding:12px;border-radius:8px;border:1px solid #f0f0f0;margin-bottom:8px;background:#fff}
+.btn{display:inline-block;padding:10px 14px;background:#111;color:#fff;border-radius:8px;text-decoration:none}
+.resultActions{text-align:right;margin-top:12px}
+
+/* footer */
+.foot{height:48px;display:flex;align-items:center;justify-content:center;color:#777;border-top:1px solid #f5f5f5}
+
+/* responsive tweaks */
+@media (max-width:820px){
+  #quiz{height:78vh;min-height:640px}
+  .topRec{flex-direction:column;align-items:flex-start}
+  .topRec img{width:100%}
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-
-body {
-  background-color: var(--bg);
-  color: var(--text);
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-header {
-  text-align: center;
-  padding: 1rem;
-  border-bottom: 1px solid var(--gray);
-  position: relative;
-}
-
-header h1 {
-  text-transform: lowercase;
-  font-weight: 600;
-  letter-spacing: 1px;
-}
-
-#lang-toggle {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  cursor: pointer;
-}
-
-main {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  padding: 1rem;
-  text-align: center;
-}
-
-#question-container {
-  max-width: 600px;
-}
-
-#answers {
-  position: relative;
-  width: 100%;
-  height: 400px;
-  margin-top: 2rem;
-}
-
-.answer {
-  position: absolute;
-  width: 45%;
-  height: 45%;
-  border: none;
-  color: white;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  border-radius: 12px;
-  transition: transform 0.2s;
-}
-
-.answer:hover {
-  transform: scale(1.05);
-}
-
-.blue { background-color: var(--blue); top: 0; left: 0; }
-.red { background-color: var(--red); top: 0; right: 0; }
-.yellow { background-color: var(--yellow); bottom: 0; left: 0; color: #000; }
-.green { background-color: var(--green); bottom: 0; right: 0; }
-
-.hidden { display: none; }
-
-#result-container {
-  max-width: 700px;
-}
-
-#racket-image {
-  max-width: 200px;
-  margin: 1rem auto;
-  display: block;
-}
-
-#other-recommendations a {
-  display: block;
-  margin: 0.5rem 0;
-  text-decoration: none;
-  color: var(--blue);
-}
-
-footer {
-  text-align: center;
-  font-size: 0.8rem;
-  padding: 1rem;
-  border-top: 1px solid var(--gray);
-}
