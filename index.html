@@ -1,41 +1,59 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>racquelle</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>racquelle — racket finder</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header>
-    <h1>racquelle</h1>
-    <div id="lang-toggle">🌐</div>
+  <header class="topbar">
+    <div class="logo">racquelle</div>
+    <div class="controls">
+      <div id="progressText">Frage 1 / 25</div>
+      <div id="langToggle" class="lang">DE</div>
+    </div>
   </header>
 
-  <main id="quiz-container">
-    <div id="question-container">
-      <h2 id="question-text">Lade Fragen...</h2>
-      <div id="answers">
-        <button class="answer blue" data-choice="a"></button>
-        <button class="answer red" data-choice="b"></button>
-        <button class="answer yellow" data-choice="c"></button>
-        <button class="answer green" data-choice="d"></button>
+  <main id="main">
+    <!-- quadrants layout -->
+    <div id="quiz">
+      <div id="questionBox" class="question-box">
+        <div id="questionInner" class="question-inner">Lade Fragen…</div>
       </div>
+
+      <div id="quadTL" class="quad quad-tl" data-key="a"></div>
+      <div id="quadTR" class="quad quad-tr" data-key="b"></div>
+      <div id="quadBL" class="quad quad-bl" data-key="c"></div>
+      <div id="quadBR" class="quad quad-br" data-key="d"></div>
     </div>
-    <div id="result-container" class="hidden">
-      <h2 id="result-title"></h2>
-      <p id="player-style"></p>
-      <div id="top-recommendation">
-        <img id="racket-image" src="assets/placeholder_racket.png" alt="Top Schläger" />
-        <h3 id="racket-name"></h3>
+
+    <!-- progress dots -->
+    <div id="progressDots" class="progress-dots" aria-hidden="true"></div>
+
+    <!-- results -->
+    <section id="result" class="result hidden">
+      <h2 id="resultTitle">Dein Spielstil & Empfehlungen</h2>
+      <div id="styleSummary" class="style-summary"></div>
+
+      <div class="topRec">
+        <img id="topImage" src="assets/placeholder_racket.svg" alt="Top recommendation" />
+        <div class="topMeta">
+          <h3 id="topName"></h3>
+          <p id="topWhy"></p>
+          <a id="topLink" class="btn" href="#" target="_blank" rel="noopener">Produkt ansehen</a>
+        </div>
       </div>
-      <div id="other-recommendations"></div>
-    </div>
+
+      <div id="altList" class="alt-list"></div>
+
+      <div class="resultActions">
+        <button id="restartBtn" class="btn">Neu starten</button>
+      </div>
+    </section>
   </main>
 
-  <footer>
-    <p>© 2025 racquelle — powered by open tennis intelligence 🎾</p>
-  </footer>
+  <footer class="foot">© racquelle — Demo (rechtlich sauber: Deep Links zu Shops)</footer>
 
   <script src="app.js"></script>
 </body>
