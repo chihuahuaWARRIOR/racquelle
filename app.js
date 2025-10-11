@@ -2,10 +2,34 @@ let currentQuestion = 0;
 let answers = [];
 let totalQuestions = 25;
 
+// Lade die Fragen aus questions.json
 async function loadQuestions() {
-const res = await fetch("./questions.json");
-const data = await res.json();
-window.questions = Array.isArray(data) ? data : data.questions;
+    try {
+        // Angenommen, questions.json liegt im gleichen Verzeichnis wie index.html
+        const response = await fetch('./questions.json');
+
+        if (!response.ok) {
+            throw new Error(`HTTP-Fehler! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('Fragen erfolgreich geladen:', data);
+
+        // Beispiel: erste Frage ausgeben
+        if (data.de && data.de.length > 0) {
+            console.log('Erste deutsche Frage:', data.de[0].question);
+        }
+
+        return data;
+
+    } catch (error) {
+        console.error('Fehler beim Laden der Fragen:', error);
+    }
+}
+
+// Aufruf der Funktion
+loadQuestions();
+
   showQuestion();
   renderProgress();
 }
@@ -68,5 +92,6 @@ document.querySelectorAll(".answer").forEach((btn, i) =>
 );
 
 loadQuestions();
+
 
 
