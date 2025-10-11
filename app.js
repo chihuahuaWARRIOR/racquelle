@@ -3,7 +3,7 @@ let answers = [];
 let totalQuestions = 25;
 
 async function loadQuestions() {
-const res = await fetch("questions.json");
+const res = await fetch("./questions.json");
 const data = await res.json();
 window.questions = Array.isArray(data) ? data : data.questions;
   showQuestion();
@@ -68,4 +68,5 @@ document.querySelectorAll(".answer").forEach((btn, i) =>
 );
 
 loadQuestions();
+
 
