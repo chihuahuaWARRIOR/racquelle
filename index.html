@@ -1,59 +1,34 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>racquelle — racket finder</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>racquelle – Schlägerberatung</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="topbar">
-    <div class="logo">racquelle</div>
-    <div class="controls">
-      <div id="progressText">Frage 1 / 25</div>
-      <div id="langToggle" class="lang">DE</div>
-    </div>
-  </header>
-
-  <main id="main">
-    <!-- quadrants layout -->
-    <div id="quiz">
-      <div id="questionBox" class="question-box">
-        <div id="questionInner" class="question-inner">Lade Fragen…</div>
+  <div id="quiz-container">
+    <div id="question-container">
+      <h2 id="question">Frage wird geladen...</h2>
+      <div id="progress-container">
+        <div id="progress-text">Frage 1 von 25</div>
+        <div id="progress-bar"></div>
       </div>
-
-      <div id="quadTL" class="quad quad-tl" data-key="a"></div>
-      <div id="quadTR" class="quad quad-tr" data-key="b"></div>
-      <div id="quadBL" class="quad quad-bl" data-key="c"></div>
-      <div id="quadBR" class="quad quad-br" data-key="d"></div>
     </div>
 
-    <!-- progress dots -->
-    <div id="progressDots" class="progress-dots" aria-hidden="true"></div>
+    <div id="answers-grid">
+      <button class="answer" id="a1"></button>
+      <button class="answer" id="a2"></button>
+      <button class="answer" id="a3"></button>
+      <button class="answer" id="a4"></button>
+    </div>
+  </div>
 
-    <!-- results -->
-    <section id="result" class="result hidden">
-      <h2 id="resultTitle">Dein Spielstil & Empfehlungen</h2>
-      <div id="styleSummary" class="style-summary"></div>
-
-      <div class="topRec">
-        <img id="topImage" src="assets/placeholder_racket.svg" alt="Top recommendation" />
-        <div class="topMeta">
-          <h3 id="topName"></h3>
-          <p id="topWhy"></p>
-          <a id="topLink" class="btn" href="#" target="_blank" rel="noopener">Produkt ansehen</a>
-        </div>
-      </div>
-
-      <div id="altList" class="alt-list"></div>
-
-      <div class="resultActions">
-        <button id="restartBtn" class="btn">Neu starten</button>
-      </div>
-    </section>
-  </main>
-
-  <footer class="foot">© racquelle — Demo (rechtlich sauber: Deep Links zu Shops)</footer>
+  <div id="result-container" class="hidden">
+    <h2 id="result-title">Deine Empfehlung</h2>
+    <div id="result-content"></div>
+  </div>
 
   <script src="app.js"></script>
 </body>
