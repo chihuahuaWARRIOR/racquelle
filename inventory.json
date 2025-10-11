@@ -1,0 +1,39 @@
+{
+  "rackets": [
+    {
+      "name": "Yonex Ezone 100 (2022)",
+      "brand": "Yonex",
+      "style": "Power & Komfort mit kontrollierbarer Länge",
+      "image": "assets/ezone100.png",
+      "link": "https://www.tenniswarehouse-europe.com/Yonex_EZONE_100_2022/descpageRCYONEXH-YE100R-DE.html"
+    },
+    {
+      "name": "Babolat Pure Aero 98 (2023)",
+      "brand": "Babolat",
+      "style": "Spinfreundlich und aerodynamisch",
+      "image": "assets/pureaero98.png",
+      "link": "https://www.tenniswarehouse-europe.com/Babolat_Pure_Aero_98_2023/descpageRCBAB-BPAR98-DE.html"
+    },
+    {
+      "name": "Prince Tour 100 (310)",
+      "brand": "Prince",
+      "style": "Gefühlvoller Allround-Schläger mit klassischem Touch",
+      "image": "assets/princetour100.png",
+      "link": "https://www.tenniswarehouse-europe.com/Prince_Tour_100_310g/descpageRCPRINCEH-PT100-DE.html"
+    },
+    {
+      "name": "Tecnifibre TF40 305 16x19",
+      "brand": "Tecnifibre",
+      "style": "Maximale Kontrolle und Stabilität",
+      "image": "assets/tf40305.png",
+      "link": "https://www.tenniswarehouse-europe.com/Tecnifibre_TF40_305_16x19/descpageRCTFUSA-TF40305-DE.html"
+    },
+    {
+      "name": "Solinco Whiteout 305 XTD",
+      "brand": "Solinco",
+      "style": "Ausgewogene Kontrolle mit solidem Feel",
+      "image": "assets/whiteout305.png",
+      "link": "https://www.tenniswarehouse-europe.com/Solinco_Whiteout_305_XTD/descpageRCSOLINCOH-SW305XTD-DE.html"
+    }
+  ]
+}

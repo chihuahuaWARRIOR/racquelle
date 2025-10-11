@@ -1,0 +1,111 @@
+{
+  "de": [
+    {
+      "q": "Du spielst einen starken ersten Aufschlag, dein Gegner blockt ihn nur kurz zurück. Was machst du?",
+      "answers": ["Sofort nach vorne und Volley", "Bleibe hinten und platziere sicher", "Gehe in den Platz und greife an", "Spiele Topspin-Drive cross"],
+      "choices": ["a", "b", "c", "d"]
+    },
+    {
+      "q": "Dein Gegner spielt einen hohen Ball auf deine Rückhand. Wie reagierst du?",
+      "answers": ["Umlaufen und mit Vorhand angreifen", "Slice zur Kontrolle", "Treffe ihn früh aggressiv", "Verteidige sicher mit Spin"],
+      "choices": ["a", "b", "c", "d"]
+    },
+    {
+      "q": "Beim Return eines zweiten Aufschlags: Was ist dein Plan?",
+      "answers": ["Risiko – Return Winner suchen", "Sicherer Spin-Return in die Mitte", "Flach und präzise cross", "Aggressiver Chip & Charge"],
+      "choices": ["a", "b", "c", "d"]
+    },
+    {
+      "q": "Langer Ballwechsel, Gegner ist leicht aus der Balance. Was machst du?",
+      "answers": ["Sofort Attacke longline", "Weiterspielen, bis klare Chance", "Drop Shot", "Kick-Angriff cross"],
+      "choices": ["a", "b", "c", "d"]
+    },
+    {
+      "q": "Beim Stoppball reagierst du schnell und erreichst ihn – was tust du?",
+      "answers": ["Gegenslice kurz cross", "Heb ihn hoch zurück", "Drive longline", "Spiele Lob"],
+      "choices": ["a", "b", "c", "d"]
+    },
+    {
+      "q": "Wie gewinnst du die meisten Punkte?",
+      "answers": ["Mit Spin und Höhe", "Mit Power und Präzision", "Mit Winkel und Platzierung", "Mit Variation und Touch"],
+      "choices": ["a", "b", "c", "d"]
+    },
+    {
+      "q": "Wie gehst du mit hohem Tempo des Gegners um?",
+      "answers": ["Nutze sein Tempo für Spin", "Blocke kontrolliert", "Gehe in die Offensive", "Spiele bewusst langsamer"],
+      "choices": ["a", "b", "c", "d"]
+    },
+    {
+      "q": "Dein Lieblingsschlag?",
+      "answers": ["Topspin-Vorhand", "Flache Rückhand", "Inside-Out Vorhand", "Drop Shot oder Volley"],
+      "choices": ["a", "b", "c", "d"]
+    },
+    {
+      "q": "Wie würdest du dein Spieltempo beschreiben?",
+      "answers": ["Variabel, aber oft aggressiv", "Ruhig und kontrolliert", "Explosiv und schnell", "Rythmusorientiert mit viel Spin"],
+      "choices": ["a", "b", "c", "d"]
+    },
+    {
+      "q": "Was ist dir beim Schläger am wichtigsten?",
+      "answers": ["Spinpotenzial", "Power", "Kontrolle", "Gefühl"],
+      "choices": ["a", "b", "c", "d"]
+    },
+    {
+      "q": "Wie schwer darf dein Schläger sein?",
+      "answers": ["Leicht (unter 295g)", "Mittel (295–310g)", "Schwer (310–330g)", "Sehr schwer (330g+)"],
+      "choices": ["a", "b", "c", "d"]
+    },
+    {
+      "q": "Bevorzugst du ein dickes oder dünnes Rahmenprofil?",
+      "answers": ["Dick (Power)", "Mittel", "Dünn (Kontrolle)", "Egal, Hauptsache ausgewogen"],
+      "choices": ["a", "b", "c", "d"]
+    },
+    {
+      "q": "Wie soll sich der Schwung anfühlen?",
+      "answers": ["Leicht und schnell", "Stabil und solide", "Mittelding", "Aerodynamisch mit Schwunggewicht"],
+      "choices": ["a", "b", "c", "d"]
+    },
+    {
+      "q": "Wie oft gehst du ans Netz?",
+      "answers": ["Selten", "Gelegentlich", "Oft", "Nur bei Gelegenheitspunkten"],
+      "choices": ["a", "b", "c", "d"]
+    },
+    {
+      "q": "Wie wichtig ist dir Komfort (Vibration, Armfreundlichkeit)?",
+      "answers": ["Sehr wichtig", "Eher wichtig", "Nicht so wichtig", "Egal – Hauptsache Leistung"],
+      "choices": ["a", "b", "c", "d"]
+    },
+    {
+      "q": "Wie spielst du bei Wind?",
+      "answers": ["Mit mehr Spin", "Mit flachen Schlägen", "Mit Sicherheit", "Unverändert aggressiv"],
+      "choices": ["a", "b", "c", "d"]
+    },
+    {
+      "q": "Wie triffst du den Ball meistens?",
+      "answers": ["Früh, vor dem Körper", "Etwas später, mit Schwung", "Sehr früh, attackierend", "Variabel, je nach Ball"],
+      "choices": ["a", "b", "c", "d"]
+    },
+    {
+      "q": "Wie oft spielst du pro Woche?",
+      "answers": ["1x", "2–3x", "4–5x", "6x oder mehr"],
+      "choices": ["a", "b", "c", "d"]
+    },
+    {
+      "q": "Was motiviert dich am meisten?",
+      "answers": ["Starker Spin & Rallys", "Power-Schläge & Winner", "Taktik & Kontrolle", "Gefühl & Variation"],
+      "choices": ["a", "b", "c", "d"]
+    },
+    {
+      "q": "Dein Lieblingsbelag?",
+      "answers": ["Sand", "Hartplatz", "Rasen", "Egal, Hauptsache spielen"],
+      "choices": ["a", "b", "c", "d"]
+    }
+  ],
+  "en": [
+    {
+      "q": "You hit a strong first serve, opponent blocks it short. What do you do?",
+      "answers": ["Go to the net for a volley", "Stay back and control", "Step in and attack", "Topspin drive crosscourt"],
+      "choices": ["a", "b", "c", "d"]
+    }
+  ]
+}

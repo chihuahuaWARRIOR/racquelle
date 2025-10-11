@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>racquelle</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>racquelle</h1>
+    <div id="lang-toggle">🌐</div>
+  </header>
+
+  <main id="quiz-container">
+    <div id="question-container">
+      <h2 id="question-text">Lade Fragen...</h2>
+      <div id="answers">
+        <button class="answer blue" data-choice="a"></button>
+        <button class="answer red" data-choice="b"></button>
+        <button class="answer yellow" data-choice="c"></button>
+        <button class="answer green" data-choice="d"></button>
+      </div>
+    </div>
+    <div id="result-container" class="hidden">
+      <h2 id="result-title"></h2>
+      <p id="player-style"></p>
+      <div id="top-recommendation">
+        <img id="racket-image" src="assets/placeholder_racket.png" alt="Top Schläger" />
+        <h3 id="racket-name"></h3>
+      </div>
+      <div id="other-recommendations"></div>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2025 racquelle — powered by open tennis intelligence 🎾</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
