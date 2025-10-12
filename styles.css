@@ -195,7 +195,7 @@ body {
     width: 85%;
     min-height: 160px;
     padding: 20px;
-    font-size: 1rem;
+    font-size: 0.75rem;
     transform: translate(-50%, -70%);
   }
 
@@ -247,7 +247,7 @@ body {
   }
   
   .question {
-    font-size: 0.10rem;
+    font-size: 0.75rem;
     padding: 14px;
     border-radius: 12px;
   }
@@ -345,6 +345,7 @@ body {
   border-radius: 8px;
   cursor: pointer;
 }
+
 
 
 
