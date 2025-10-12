@@ -259,6 +259,12 @@ body {
     box-sizing: border-box;
   }
 
+  .question {
+    font-size: 0.95rem;
+    padding: 14px;
+    border-radius: 12px;
+  }
+  
   /* Antworten etwas kleiner und höherer Padding für Touch */
   .answer {
     font-size: 0.95rem;
@@ -339,6 +345,7 @@ body {
   border-radius: 8px;
   cursor: pointer;
 }
+
 
 
 
