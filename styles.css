@@ -1,93 +1,74 @@
+/* Allgemein */
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  background: #fff;
-  color: #111;
+  background: #111;
+  color: #fff;
   margin: 0;
   padding: 0;
+  text-align: center;
   height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
+/* Header */
 .header {
-  width: 100vw;
-  height: 60px;
-  background: #fff;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  position: relative;
+  padding: 0.5em 1em;
 }
 
 .logo {
-  font-size: 2.3rem;
-  font-style: italic;
-  font-weight: 400;
-  letter-spacing: 2px;
-  color: #111;
   text-transform: lowercase;
-  margin: 0 auto;
-  padding: 0;
+  font-weight: 800;
+  font-size: 1.8rem;
+  letter-spacing: 1px;
+  color: #fff;
 }
 
+/* Sprachumschalter */
 .lang-select {
-  position: absolute;
-  top: 14px;
-  right: 24px;
-  z-index: 30;
   display: flex;
-  gap: 4px;
-  background: #111;
-  border-radius: 8px;
-  padding: 2px 6px;
+  gap: 0.5em;
 }
 
 .lang-btn {
   background: none;
-  border: none;
+  border: 1px solid #555;
   color: #fff;
-  font-size: 0.7rem;
-  font-weight: 700;
-  padding: 0.1em 0.5em;
+  padding: 0.3em 0.8em;
   cursor: pointer;
-  border-radius: 4px;
-  margin: 0 1px;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: background 0.2s;
 }
 
 .lang-btn.active,
 .lang-btn:hover {
   background: #fff;
-  color: #111;
+  color: #000;
 }
 
-.main-area {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100vw;
-  max-width: 100vw;
-}
-
+/* Fragebox mit halbtransparentem Hintergrund */
 .question-box {
   background: rgba(255, 255, 255, 0.6);
-  color: #111;
+  color: #000;
   padding: 1.5em;
-  border-radius: 0;
+  border-radius: 20px;
   width: 80%;
   max-width: 600px;
-  margin: 0 auto 2em auto;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
-  text-align: center;
+  margin: 1em auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .question-text {
   font-size: 1.4rem;
-  font-weight: 700;
+  font-weight: 600;
   margin-bottom: 0.5em;
 }
 
+/* Fortschritt */
 .progress-text {
   font-size: 1rem;
   margin-top: 0.3em;
@@ -113,44 +94,65 @@ body {
   background: #000;
 }
 
+/* Antwortflächen */
 .answers-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
-  gap: 0;
-  width: 80vw;
-  max-width: 900px;
-  flex: 1;
-  height: 50vh;
-  margin: 0 auto;
-  position: relative;
+  width: 100%;
+  height: 100%;
+  flex-grow: 1;
 }
 
 .answer {
-  font-size: 2rem;
-  font-weight: 700;
+  font-size: 1.1rem;
+  font-weight: 500;
   border: none;
   color: #fff;
   cursor: pointer;
-  border-radius: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
-  box-shadow: none;
+  transition: transform 0.2s, opacity 0.2s;
 }
-
-.answer.blue    { background: #4977c5; }
-.answer.red     { background: #c95454; }
-.answer.yellow  { background: #e2b442; color: #111; }
-.answer.green   { background: #3a7042; }
 
 .answer:hover {
-  opacity: 0.95;
   transform: scale(1.02);
+  opacity: 0.95;
 }
 
+/* Bauhaus-inspirierte Farben, leicht gedämpft */
+.blue { background: #4977c5; }    /* ruhigeres Blau */
+.red { background: #c95454; }     /* weicheres Rot */
+.yellow { background: #e2b442; }  /* gedecktes Gelb */
+.green { background: #3a7042; }   /* Baumgrün */
+
+/* Ergebnis */
+#result-container {
+  padding: 2em;
+}
+
+#result-container img {
+  width: 250px;
+  border-radius: 10px;
+  margin: 1em 0;
+}
+
+/* Footer */
+.footer {
+  position: fixed;
+  bottom: 8px;
+  right: 12px;
+  font-size: 0.8rem;
+}
+
+.footer a {
+  color: #999;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  color: #fff;
+}
+
+/* Utility */
 .hidden {
   display: none;
 }
