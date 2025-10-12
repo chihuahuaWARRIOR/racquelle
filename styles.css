@@ -1,4 +1,3 @@
-/* Grundlayout */
 body {
   min-height: 100vh;
   margin: 0;
@@ -10,76 +9,60 @@ body {
   flex-direction: column;
 }
 
-/* Header (optional) */
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.5em 1em;
-}
-
-.logo {
-  text-transform: lowercase;
-  font-weight: 800;
-  font-size: 1.8rem;
-  letter-spacing: 1px;
-  color: #fff;
-}
-
-/* Sprachumschalter (optional) */
-.lang-select {
-  display: flex;
-  gap: 0.5em;
-}
-
-.lang-btn {
-  background: none;
-  border: 1px solid #555;
-  color: #fff;
-  padding: 0.3em 0.8em;
-  cursor: pointer;
-  border-radius: 6px;
-  font-weight: bold;
-  transition: background 0.2s;
-}
-
-.lang-btn.active,
-.lang-btn:hover {
-  background: #fff;
-  color: #000;
-}
-
-/* Kreuz-Layout für Quiz */
-.quiz-cross {
+.quiz-corner-layout {
   position: relative;
   width: 100vw;
   height: 80vh;
-  display: grid;
-  grid-template-areas:
-    ".    top    ."
-    "left center right"
-    ".   bottom  .";
-  grid-template-columns: 1fr 300px 1fr;
-  grid-template-rows: 1fr 160px 1fr;
-  justify-items: center;
-  align-items: center;
+  min-height: 480px;
 }
 
-/* Fragebox in der Mitte */
-.question-box {
-  grid-area: center;
+.answer {
+  position: absolute;
+  width: 30vw;
+  height: 30vh;
+  min-width: 140px;
+  min-height: 100px;
+  font-size: 2rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.2s;
+  z-index: 2;
+}
+
+.answer:hover {
+  transform: scale(1.06);
+  opacity: 0.93;
+}
+
+/* Positionierung in den Ecken */
+.answer-topleft    { top: 0; left: 0; background: #4977c5; }
+.answer-topright   { top: 0; right: 0; background: #c95454; }
+.answer-bottomleft { bottom: 0; left: 0; background: #e2b442; color: #111; }
+.answer-bottomright{ bottom: 0; right: 0; background: #3a7042; }
+
+/* Fragebox zentriert */
+.question-center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   background: rgba(255,255,255,0.85);
   color: #111;
   border-radius: 20px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
-  padding: 1.2em 2em;
+  box-shadow: 0 0 14px rgba(0,0,0,0.16);
+  padding: 1.5em 2.5em;
+  min-width: 200px;
+  min-height: 80px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: 1.3rem;
-  font-weight: 600;
-  border: 3px solid #222;
+  z-index: 10;
 }
 
 /* Fortschritt & Frage */
@@ -110,45 +93,6 @@ body {
   background: #000;
 }
 
-/* Antwortknöpfe */
-.answer {
-  min-width: 120px;
-  min-height: 60px;
-  font-size: 2rem;
-  font-weight: bold;
-  border: none;
-  border-radius: 16px;
-  color: #fff;
-  cursor: pointer;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.2s, opacity 0.2s;
-}
-
-.answer:hover {
-  transform: scale(1.08);
-  opacity: 0.95;
-}
-
-/* Bauhaus-Farben */
-.answer.top    { grid-area: top;    background: #4977c5; }
-.answer.right  { grid-area: right;  background: #c95454; }
-.answer.bottom { grid-area: bottom; background: #3a7042; }
-.answer.left   { grid-area: left;   background: #e2b442; color: #111; }
-
-/* Ergebnis */
-#result-container {
-  padding: 2em;
-}
-
-#result-container img {
-  width: 250px;
-  border-radius: 10px;
-  margin: 1em 0;
-}
-
 /* Footer (optional) */
 .footer {
   position: fixed;
@@ -156,12 +100,10 @@ body {
   right: 12px;
   font-size: 0.8rem;
 }
-
 .footer a {
   color: #999;
   text-decoration: none;
 }
-
 .footer a:hover {
   color: #fff;
 }
