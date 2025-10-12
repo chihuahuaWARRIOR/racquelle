@@ -24,7 +24,7 @@ body {
   z-index: 2;
   color: #222;
 
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.6); /* halbtransparent */
   backdrop-filter: blur(6px);
   border-radius: 20px;
   padding: 20px 40px 35px 40px;
@@ -69,8 +69,9 @@ body {
   height: 100vh;
   width: 100vw;
   gap: 1px;
-  background: white;
+  /* vorher stand hier background: white; das war die Ursache */
 }
+
 .answer {
   border: none;
   font-size: 1.2rem;
@@ -110,19 +111,18 @@ body {
   border-bottom-right-radius: 20px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   font-size: 1.4rem;
-  text-decoration: none; /* Kein Unterstrich bei Links */
+  text-decoration: none;
 }
 
 /* racquelle links oben */
 #brand {
   top: 0;
   left: 50px;
-  transform: translateY(0);
   z-index: 10;
 }
 #brand a {
   color: black;
-  text-decoration: none; /* entfernt Unterstrich */
+  text-decoration: none; /* kein Unterstrich */
 }
 
 /* Sprache rechts oben */
@@ -169,6 +169,8 @@ body {
   color: black;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
   box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   z-index: 10;
