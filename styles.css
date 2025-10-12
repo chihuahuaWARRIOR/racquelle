@@ -1,85 +1,86 @@
 body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  background: #111;
-  color: #fff;
   margin: 0;
   padding: 0;
-  text-align: center;
-  height: 100vh;
+  min-height: 100vh;
+  background: #111;
+  color: #fff;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   display: flex;
   flex-direction: column;
 }
 
-/* Header */
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.5em 1em;
+.quiz-area {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  min-height: 600px;
+  overflow: hidden;
 }
 
-.logo {
-  text-transform: lowercase;
-  font-weight: 800;
-  font-size: 1.8rem;
-  letter-spacing: 1px;
-  color: #fff;
-}
-
-/* Sprachumschalter */
-.lang-select {
-  display: flex;
-  gap: 0.5em;
-}
-
-.lang-btn {
-  background: none;
-  border: 1px solid #555;
-  color: #fff;
-  padding: 0.3em 0.8em;
-  cursor: pointer;
-  border-radius: 6px;
+/* Antwortflächen: decken die Ecken und füllen den ganzen Bereich */
+.answer {
+  position: absolute;
+  width: 50vw;
+  height: 50vh;
+  border: none;
+  font-size: 2rem;
   font-weight: bold;
-  transition: background 0.2s;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 0 0 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  z-index: 1;
+  transition: transform 0.15s, opacity 0.15s;
 }
 
-.lang-btn.active,
-.lang-btn:hover {
-  background: #fff;
-  color: #000;
+.answer-topleft    { top: 0; left: 0; background: #4977c5; border-top-left-radius: 60px; }
+.answer-topright   { top: 0; right: 0; background: #c95454; border-top-right-radius: 60px; }
+.answer-bottomleft { bottom: 0; left: 0; background: #e2b442; color: #111; border-bottom-left-radius: 60px; }
+.answer-bottomright{ bottom: 0; right: 0; background: #3a7042; border-bottom-right-radius: 60px; }
+
+.answer:hover {
+  opacity: 0.93;
+  transform: scale(1.03);
 }
 
-/* Fragebox mit halbtransparentem Hintergrund */
+/* Fragebox: perfekt zentriert, leicht durchsichtiger Hintergrund */
 .question-box {
-  background: rgba(255, 255, 255, 0.6);
-  color: #000;
-  padding: 1.5em;
-  border-radius: 20px;
-  width: 80%;
-  max-width: 600px;
-  margin: 1em auto;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255,255,255,0.6);
+  color: #111;
+  border-radius: 22px;
+  box-shadow: 0 0 18px rgba(0,0,0,0.18);
+  padding: 2em 2.5em;
+  min-width: 220px;
+  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 2;
 }
 
+/* Frage & Fortschritt */
 .question-text {
-  font-size: 1.4rem;
-  font-weight: 600;
-  margin-bottom: 0.5em;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.7em;
 }
-
-/* Fortschritt */
 .progress-text {
   font-size: 1rem;
   margin-top: 0.3em;
   color: #333;
 }
-
 .progress-bar {
   display: flex;
   justify-content: center;
   margin-top: 0.5em;
 }
-
 .progress-bar span {
   display: inline-block;
   width: 10px;
@@ -88,67 +89,8 @@ body {
   margin: 0 2px;
   border-radius: 2px;
 }
-
 .progress-bar span.active {
   background: #000;
-}
-
-/* Antwortflächen */
-.answers-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  width: 100%;
-  height: 100%;
-  flex-grow: 1;
-}
-
-.answer {
-  font-size: 1.1rem;
-  font-weight: 500;
-  border: none;
-  color: #fff;
-  cursor: pointer;
-  transition: transform 0.2s, opacity 0.2s;
-}
-
-.answer:hover {
-  transform: scale(1.02);
-  opacity: 0.95;
-}
-
-/* Bauhaus-inspirierte Farben, leicht gedämpft */
-.blue { background: #4977c5; }
-.red { background: #c95454; }
-.yellow { background: #e2b442; color: #111; }
-.green { background: #3a7042; }
-
-/* Ergebnis */
-#result-container {
-  padding: 2em;
-}
-
-#result-container img {
-  width: 250px;
-  border-radius: 10px;
-  margin: 1em 0;
-}
-
-/* Footer */
-.footer {
-  position: fixed;
-  bottom: 8px;
-  right: 12px;
-  font-size: 0.8rem;
-}
-
-.footer a {
-  color: #999;
-  text-decoration: none;
-}
-
-.footer a:hover {
-  color: #fff;
 }
 
 /* Utility */
