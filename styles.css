@@ -9,7 +9,7 @@ body {
   flex-direction: column;
 }
 
-/* Header: schmal, racquelle zentriert, kursiv, schwarz */
+/* Header */
 .header {
   width: 100vw;
   height: 60px;
@@ -34,7 +34,7 @@ body {
   padding: 0;
 }
 
-/* Sprachauswahl: oben rechts, klein, schwarzer Kasten, über Antwort 2 */
+/* Sprachauswahl: oben rechts, klein, schwarzer Kasten */
 .lang-select {
   position: absolute;
   top: 14px;
@@ -67,26 +67,23 @@ body {
   color: #111;
 }
 
-/* Quiz-Grid: Antwortflächen decken alles ab */
+/* Antwort-Quadranten: 2x2 Grid, jede Fläche 1/4 des Viewports */
 .answers-grid {
-  flex: 1;
-  width: 100vw;
-  height: calc(100vh - 60px); /* alles außer Header */
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   gap: 0;
-  box-sizing: border-box;
+  width: 100vw;
+  height: calc(100vh - 60px);
   position: relative;
 }
 
-/* Antwortflächen: keine Abrundung, füllen alles aus */
 .answer {
   border: none;
   border-radius: 0;
   width: 100%;
   height: 100%;
-  font-size: 2rem;
+  font-size: 2.3rem;
   font-weight: 700;
   color: #fff;
   display: flex;
@@ -108,7 +105,7 @@ body {
   transform: scale(1.02);
 }
 
-/* Fragebox: zentriert, halbtransparent, keine Abrundung */
+/* Fragebox: zentral, halbtransparent, keine Abrundung, schwarz */
 .question-box {
   position: absolute;
   left: 50%;
@@ -116,8 +113,8 @@ body {
   transform: translate(-50%, -50%);
   background: rgba(255,255,255,0.6);
   color: #111;
-  box-shadow: 0 0 18px rgba(0,0,0,0.11);
-  padding: 1.2em 2.2em;
+  box-shadow: 0 0 14px rgba(0,0,0,0.09);
+  padding: 1.5em 2.5em;
   min-width: 220px;
   min-height: 60px;
   border-radius: 0;
@@ -130,7 +127,7 @@ body {
 }
 
 .question-text {
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   font-weight: 700;
   margin-bottom: 0.3em;
 }
