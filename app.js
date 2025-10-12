@@ -108,3 +108,22 @@ document.querySelectorAll(".answer").forEach((btn, i) =>
 
 // Start
 loadQuestions();
+
+// Sprache umschalten
+document.getElementById("lang-de").addEventListener("click", () => switchLang("de"));
+document.getElementById("lang-en").addEventListener("click", () => switchLang("en"));
+
+function switchLang(lang) {
+  document.getElementById("lang-de").classList.toggle("active", lang === "de");
+  document.getElementById("lang-en").classList.toggle("active", lang === "en");
+  localStorage.setItem("language", lang);
+  loadQuestions();
+}
+
+// Sprachpräferenz merken
+const savedLang = localStorage.getItem("language");
+if (savedLang) {
+  switchLang(savedLang);
+} else {
+  loadQuestions();
+}
