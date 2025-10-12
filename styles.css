@@ -239,8 +239,8 @@ body {
     transform: none;
     width: 92%;
     max-width: 640px;
-    margin: 14px auto;                /* oben Abstand, dann normaler Fluss */
-    min-height: 180px;                /* kleiner als Desktop, deckt kurze Fragen */
+    margin: 1px auto;                /* oben Abstand, dann normaler Fluss */
+    min-height: 200px;                /* kleiner als Desktop, deckt kurze Fragen */
     padding: 14px 16px 18px 16px;
     box-sizing: border-box;
     z-index: 5;                        /* bleibt über Grid, aber nicht fixiert */
@@ -251,6 +251,7 @@ body {
     padding: 14px;
     border-radius: 12px;
   }
+  
   /* Antworten-Grid rutscht unter die Fragebox */
   #answers-grid {
     position: relative;
@@ -344,6 +345,7 @@ body {
   border-radius: 8px;
   cursor: pointer;
 }
+
 
 
 
