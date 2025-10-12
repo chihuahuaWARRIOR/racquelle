@@ -197,3 +197,23 @@ body {
     padding: 15px 20px 30px 20px;
   }
 }
+
+/* === FIX: Kein weißer Overlay über gesamter Seite === */
+body,
+#quiz-container,
+#answers-grid {
+  background: none !important;
+}
+
+/* Hintergrundfarbe der Seite bleibt hellgrau */
+body {
+  background-color: #f3f3f3 !important;
+}
+
+/* Nur Boxen sind halbtransparent – nicht die ganze Seite */
+.brand-island,
+#question-container,
+#footer-island,
+#lang-switch {
+  background: rgba(255, 255, 255, 0.6) !important;
+}
