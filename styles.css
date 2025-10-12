@@ -152,3 +152,103 @@ body {
   backdrop-filter: blur(4px);
 }
 
+/* === Branding-Inseln überarbeitet === */
+.brand-island {
+  position: absolute;
+  background: white;
+  color: black;
+  padding: 8px 20px;
+  font-weight: 700;
+  font-style: normal; /* kein italic mehr */
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-size: 1.4rem;
+}
+
+/* racquelle links oben */
+#brand {
+  top: 0;
+  left: 50px;
+  transform: translateY(0);
+  z-index: 10;
+}
+
+/* Sprache rechts oben */
+#lang-switch {
+  top: 0;
+  right: 50px;
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+
+#lang-switch button {
+  background: none;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  color: black;
+  padding: 6px 8px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+#lang-switch button:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* Impressum unten rechts - umgedrehte Insel */
+#footer-island {
+  position: fixed;
+  bottom: 0;
+  right: 30px;
+  background: white;
+  padding: 8px 20px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: black;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  z-index: 10;
+}
+
+/* Fragebox – abgerundet & größerer Innenraum */
+#question-container {
+  background: rgba(255, 255, 255, 0.6) !important;
+  backdrop-filter: blur(6px);
+  border-radius: 20px;
+  padding: 20px 40px 35px 40px; /* mehr Platz unten */
+  margin-bottom: 30px;
+}
+
+/* Fortschrittsanzeige mit Abstand */
+#progress-text {
+  margin-top: 10px;
+}
+
+/* Responsives Verhalten */
+@media (max-width: 768px) {
+  .brand-island {
+    font-size: 1rem;
+    padding: 6px 14px;
+  }
+  #brand {
+    left: 20px;
+  }
+  #lang-switch {
+    right: 20px;
+  }
+  #footer-island {
+    right: 20px;
+  }
+  #question-container {
+    padding: 15px 20px 30px 20px;
+    margin-bottom: 20px;
+  }
+}
+
