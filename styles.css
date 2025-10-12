@@ -1,214 +1,150 @@
-/* ===== Grundlayout ===== */
-
-html, body {
+/* ===== Allgemeines Layout ===== */
+body {
   margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  background-color: #ffffff;
-  color: #000;
+  font-family: "Inter", Arial, sans-serif;
+  background: white;
+  color: #111;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
 }
 
-/* ===== Kopfbereich ===== */
-
+/* ===== Header ===== */
 header {
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1.2em 2em;
+  padding: 20px 0;
   position: relative;
-  font-weight: 700;
-  font-size: 1.8rem;
-  text-transform: lowercase;
 }
 
 header h1 {
+  font-size: 2rem;
+  font-weight: 800;
   margin: 0;
-  font-weight: 700;
-  letter-spacing: 0.5px;
 }
 
-/* ===== Sprache & Impressum ===== */
-
-.language-switch {
+/* ===== Language Switcher ===== */
+#language-switch {
   position: absolute;
-  top: 1.2em;
-  right: 2em;
-}
-
-.language-switch button {
-  background: #000;
-  color: #fff;
-  border: none;
-  padding: 4px 10px;
-  margin-left: 5px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: opacity 0.2s;
-}
-
-.language-switch button:hover {
-  opacity: 0.7;
-}
-
-footer {
-  position: absolute;
-  bottom: 10px;
   right: 20px;
-  font-size: 0.8rem;
-  color: #999;
+  top: 25px;
+  display: flex;
+  gap: 6px;
 }
 
-/* ===== Hauptinhalt ===== */
+#language-switch button {
+  background: #f2f2f2;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  padding: 3px 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
 
-main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
+#language-switch button:hover {
+  background: #ddd;
+}
+
+#language-switch .active {
+  background: #000;
+  color: white;
+  border-color: #000;
 }
 
 /* ===== Fragebox ===== */
-
-.question-box {
-  position: absolute;
-  top: 35%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(255, 255, 255, 0.85);
-  border-radius: 18px;
-  padding: 1.5em 2em;
+#question-container {
   text-align: center;
-  width: 90%;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  padding: 25px 35px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   max-width: 600px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  z-index: 10;
+  margin: 40px auto 20px;
+  position: relative;
+  z-index: 2;
 }
 
-.question-box h2 {
-  font-size: 1.3rem;
-  font-weight: 700;
-  margin: 0 0 0.5em;
+#question {
+  font-weight: 600;
+  font-size: 1.1rem;
 }
 
 #progress-text {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   color: #666;
-  margin-top: 0.3em;
+  margin-top: 8px;
 }
 
-/* ===== Fortschrittsanzeige ===== */
-
-#progress-bar {
-  display: flex;
-  justify-content: center;
-  margin-top: 0.6em;
-  gap: 4px;
-}
-
-#progress-bar span {
-  display: inline-block;
-  width: 16px;
-  height: 3px;
-  background-color: #ccc;
-  border-radius: 2px;
-}
-
-#progress-bar span.active {
-  background-color: #000;
-}
-
-/* ===== Antworten (4 Felder, gesamte Fläche unten) ===== */
-
-.answers-grid {
+/* ===== Antwortfelder ===== */
+#answers {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  width: 100%;
+  flex-grow: 1;
+  height: 40vh;
 }
 
 .answer {
   display: flex;
-  justify-content: center;
   align-items: center;
-  font-size: 1.2rem;
+  justify-content: center;
   font-weight: 500;
-  color: #fff;
-  border: none;
+  font-size: 1rem;
+  color: white;
   cursor: pointer;
-  transition: transform 0.15s ease, opacity 0.2s ease;
+  transition: 0.3s;
+  text-align: center;
+  padding: 20px;
 }
 
 .answer:hover {
-  transform: scale(1.03);
-  opacity: 0.95;
+  filter: brightness(0.9);
 }
 
-/* ===== Farben – Bauhaus-inspiriert ===== */
-#a1 { background-color: #5b84d7; }   /* gedämpftes Blau */
-#a2 { background-color: #d26565; }   /* weiches Rot */
-#a3 { background-color: #e3b94b; }   /* warmes Gelb */
-#a4 { background-color: #467a53; }   /* Waldgrün */
+/* Farben */
+#a1 { background-color: #4376d1; } /* Blau */
+#a2 { background-color: #c94a44; } /* Rot */
+#a3 { background-color: #e0b63d; } /* Gelb */
+#a4 { background-color: #3a7a4c; } /* Grün */
 
-/* ===== Ergebnis ===== */
-#result-container {
-  display: none;
-  text-align: center;
-  padding: 2em;
+/* ===== Impressum ===== */
+footer {
+  position: fixed;
+  bottom: 10px;
+  right: 15px;
+  font-size: 0.75rem;
+  color: #777;
 }
 
-#result-container img {
-  width: 220px;
-  border-radius: 10px;
-  margin-top: 1em;
-}
-
-/* ===== Responsive Anpassung ===== */
-
+/* ===== Responsive ===== */
 @media (max-width: 768px) {
-  header {
-    font-size: 1.4rem;
-    padding: 1em;
+  header h1 {
+    font-size: 1.5rem;
   }
 
-  .question-box {
-    top: 32%;
-    width: 90%;
-    padding: 1em 1.2em;
+  #question-container {
+    padding: 15px 20px;
+    margin: 20px;
   }
 
-  .question-box h2 {
-    font-size: 1.1rem;
-  }
-
-  .answers-grid {
+  #answers {
     grid-template-columns: 1fr;
     grid-template-rows: repeat(4, 1fr);
+    height: auto;
   }
 
   .answer {
-    font-size: 1rem;
+    font-size: 0.9rem;
+    padding: 15px;
   }
 
-  .language-switch {
-    top: 1em;
-    right: 1em;
-  }
-
-  footer {
-    font-size: 0.7rem;
-    right: 10px;
-    bottom: 5px;
+  #language-switch {
+    top: 18px;
+    right: 15px;
   }
 }
