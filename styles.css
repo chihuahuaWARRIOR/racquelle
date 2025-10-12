@@ -245,7 +245,12 @@ body {
     box-sizing: border-box;
     z-index: 5;                        /* bleibt über Grid, aber nicht fixiert */
   }
-
+  
+  .question {
+    font-size: 0.10rem;
+    padding: 14px;
+    border-radius: 12px;
+  }
   /* Antworten-Grid rutscht unter die Fragebox */
   #answers-grid {
     position: relative;
@@ -257,12 +262,6 @@ body {
     gap: 6px;
     padding: 0 10px 24px 10px;         /* etwas Innenabstand für Touch */
     box-sizing: border-box;
-  }
-
-  .question {
-    font-size: 0.10rem;
-    padding: 14px;
-    border-radius: 12px;
   }
   
   /* Antworten etwas kleiner und höherer Padding für Touch */
@@ -345,6 +344,7 @@ body {
   border-radius: 8px;
   cursor: pointer;
 }
+
 
 
 
