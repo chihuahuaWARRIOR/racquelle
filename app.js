@@ -85,21 +85,41 @@ function showResults() {
   document.getElementById("quiz-container").classList.add("hidden");
   document.getElementById("result-container").classList.remove("hidden");
 
-  // Beispielauswertung
-  const result = {
-    racket: "Yonex Ezone 100 (2022)",
-    desc: "Ideal für rhythmische Grundlinienspieler, die Power und Komfort kombinieren möchten.",
-    img: "https://www.tenniswarehouse-europe.com/images/descpageRCYONEXH-YE100R.jpg",
-    link: "https://www.tenniswarehouse-europe.com/Yonex_EZONE_100_2022/descpageRCYONEXH-YE100R-DE.html",
-  };
+  // Beispielhafte einfache Auswertung
+  const resultIndex = Math.floor(Math.random() * 3);
+  let result;
+
+  if (resultIndex === 0) {
+    result = {
+      racket: "Yonex Ezone 100 (2022)",
+      desc: "Ideal für rhythmische Grundlinienspieler, die Power und Komfort kombinieren möchten.",
+      img: "https://www.tenniswarehouse-europe.com/images/descpageRCYONEXH-YE100R.jpg",
+      link: "https://www.tenniswarehouse-europe.com/Yonex_EZONE_100_2022/descpageRCYONEXH-YE100R-DE.html"
+    };
+  } else if (resultIndex === 1) {
+    result = {
+      racket: "Babolat Pure Drive",
+      desc: "Perfekt für aggressive Spieler, die Spin und Power suchen.",
+      img: "https://www.tenniswarehouse-europe.com/images/descpageRCBAB-PD300R-1.jpg",
+      link: "https://www.tenniswarehouse-europe.com/Babolat_Pure_Drive/descpageRCBAB-PD300R-DE.html"
+    };
+  } else {
+    result = {
+      racket: "Head Speed MP 2024",
+      desc: "Ausgewogen zwischen Kontrolle und Power – ideal für Allrounder.",
+      img: "https://www.tenniswarehouse-europe.com/images/descpageRCHEADH-HSMP24-1.jpg",
+      link: "https://www.tenniswarehouse-europe.com/Head_Speed_MP_2024/descpageRCHEADH-HSMP24-DE.html"
+    };
+  }
 
   document.getElementById("result-content").innerHTML = `
     <h2>${result.racket}</h2>
     <p>${result.desc}</p>
-    <img src="${result.img}" alt="${result.racket}" />
+    <img src="${result.img}" alt="${result.racket}" style="max-width:300px;border-radius:12px;margin:10px 0;">
     <p><a href="${result.link}" target="_blank">➡️ Zum Schläger bei Tennis Warehouse Europe</a></p>
   `;
 }
+
 
 // Event Listener für Buttons
 document.querySelectorAll(".answer").forEach((btn, i) =>
@@ -127,3 +147,4 @@ if (savedLang) {
 } else {
   loadQuestions();
 }
+
