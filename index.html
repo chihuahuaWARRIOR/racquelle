@@ -15,15 +15,17 @@
     </div>
   </header>
   
-<main class="quiz-corner-layout">
-  <div class="answer answer-topleft blue">Antwort 1</div>
-  <div class="answer answer-topright red">Antwort 2</div>
-  <div class="answer answer-bottomleft yellow">Antwort 3</div>
-  <div class="answer answer-bottomright green">Antwort 4</div>
-  <div class="question-center">
-    <div id="question" class="question-text">Frage steht hier</div>
+<main class="main-area">
+  <div class="question-box">
+    <div id="question" class="question-text">Frage wird geladen...</div>
     <div id="progress-text" class="progress-text"></div>
     <div id="progress-bar" class="progress-bar"></div>
+  </div>
+  <div class="answers-grid">
+    <button id="a1" class="answer blue"></button>
+    <button id="a2" class="answer red"></button>
+    <button id="a3" class="answer yellow"></button>
+    <button id="a4" class="answer green"></button>
   </div>
 </main>
 
@@ -34,5 +36,6 @@
   <script src="app.js"></script>
 </body>
 </html>
+
 
 
