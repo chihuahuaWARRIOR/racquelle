@@ -3,9 +3,38 @@ let answers = [];
 let totalQuestions = 25;
 
 // Lade die Fragen aus questions.json
-const res = await fetch("questions.json");
-const data = await res.json();
-window.questions = Array.isArray(data) ? data : data.questions;
+async function loadQuestions() {
+  try {
+    console.log("Fragen werden geladen...");
+    const response = await fetch("./questions.json", {
+      headers: {
+        "Cache-Control": "no-cache",
+        "Pragma": "no-cache",
+      },
+    });
+
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+    const text = await response.text();
+    console.log("Antwort erhalten:", text.slice(0, 100)); // zeige Anfang der Datei
+
+    const data = JSON.parse(text);
+    window.questions = Array.isArray(data) ? data : data.questions;
+
+    if (!window.questions || window.questions.length === 0) {
+      throw new Error("Keine Fragen gefunden");
+    }
+
+    console.log(`Fragen geladen: ${window.questions.length}`);
+    showQuestion();
+    renderProgress();
+  } catch (error) {
+    console.error("Fehler beim Laden:", error);
+    document.getElementById("question").innerText =
+      "Fragen konnten nicht geladen werden 😕";
+  }
+}
+
 
 // Aufruf der Funktion
 loadQuestions();
@@ -72,6 +101,7 @@ document.querySelectorAll(".answer").forEach((btn, i) =>
 );
 
 loadQuestions();
+
 
 
 
