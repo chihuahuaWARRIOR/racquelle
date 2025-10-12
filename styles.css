@@ -221,3 +221,64 @@ body {
     right: 20px;
   }
 }
+/* ---------------------------
+   Mobile-Fix: Fragebox nicht überlappen
+   --------------------------- */
+@media (max-width: 768px) {
+  /* Stelle sicher, dass die Seite scrollbar ist, falls nötig */
+  html, body {
+    height: 100%;
+    overflow-y: auto;
+  }
+
+  /* Fragebox kleiner und oben fix, nicht mehr so stark nach oben verschoben */
+  #question-container {
+    position: relative;               /* relativ, damit sie im Dokumentfluss bleibt */
+    top: auto;
+    left: auto;
+    transform: none;
+    width: 92%;
+    max-width: 640px;
+    margin: 14px auto;                /* oben Abstand, dann normaler Fluss */
+    min-height: 120px;                /* kleiner als Desktop, deckt kurze Fragen */
+    padding: 14px 16px 18px 16px;
+    box-sizing: border-box;
+    z-index: 5;                        /* bleibt über Grid, aber nicht fixiert */
+  }
+
+  /* Antworten-Grid rutscht unter die Fragebox */
+  #answers-grid {
+    position: relative;
+    top: auto;                         /* vorher war top: 50% absolut */
+    height: calc(100vh - 180px);       /* nimmt Rest des Viewports ein */
+    width: 100%;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 1fr);
+    gap: 6px;
+    padding: 0 10px 24px 10px;         /* etwas Innenabstand für Touch */
+    box-sizing: border-box;
+  }
+
+  /* Antworten etwas kleiner und höherer Padding für Touch */
+  .answer {
+    font-size: 0.95rem;
+    padding: 14px;
+    border-radius: 12px;
+  }
+
+  /* Branding-Inseln etwas kleiner positionieren */
+  .brand-island {
+    font-size: 0.95rem;
+    padding: 6px 12px;
+  }
+
+  #brand { left: 12px; top: 8px; }
+  #lang-switch { right: 12px; top: 8px; padding: 6px 10px; }
+  #footer-island { right: 12px; bottom: 0; padding: 8px 12px; }
+
+  /* Fortschrittsbar: kleiner und zentral unter Frage */
+  #progress-bar { gap: 4px; margin-top: 8px; }
+  #progress-bar span { width: 10px; height: 4px; }
+}
+
+
