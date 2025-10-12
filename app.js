@@ -1,8 +1,13 @@
+// === Racquelle Quiz App ===
+// Autor: chihuahuaWARRIOR 🐾
+// Saubere Version 2025-10
+
 let currentQuestion = 0;
 let answers = [];
+let questions = [];
 let totalQuestions = 25;
 
-// Lade die Fragen aus questions.json
+// --- Lade Fragen aus questions.json ---
 async function loadQuestions() {
   try {
     console.log("Fragen werden geladen...");
@@ -16,48 +21,56 @@ async function loadQuestions() {
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
     const text = await response.text();
-    console.log("Antwort erhalten:", text.slice(0, 100)); // zeige Anfang der Datei
+    console.log("Antwort erhalten:", text.slice(0, 100));
 
     const data = JSON.parse(text);
-    window.questions = Array.isArray(data) ? data : data.questions;
+    questions = Array.isArray(data) ? data : data.questions;
 
-    if (!window.questions || window.questions.length === 0) {
+    if (!questions || questions.length === 0) {
       throw new Error("Keine Fragen gefunden");
     }
 
-    console.log(`Fragen geladen: ${window.questions.length}`);
+    totalQuestions = questions.length;
+    console.log(`Fragen geladen: ${totalQuestions}`);
+
+    currentQuestion = 0;
     showQuestion();
     renderProgress();
   } catch (error) {
     console.error("Fehler beim Laden:", error);
-    document.getElementById("question").innerText =
-      "Fragen konnten nicht geladen werden 😕";
+    const qEl = document.getElementById("question");
+    if (qEl)
+      qEl.innerText = "Fragen konnten nicht geladen werden 😕";
   }
 }
 
-
-// Aufruf der Funktion
-loadQuestions();
-
-  showQuestion();
-  renderProgress();
-}
-
+// --- Zeige aktuelle Frage ---
 function showQuestion() {
-  if (currentQuestion >= questions.length) return showResults();
+  if (!questions.length) return;
+
+  if (currentQuestion >= questions.length) {
+    showResults();
+    return;
+  }
 
   const q = questions[currentQuestion];
   document.getElementById("question").innerText = q.text;
-  document.getElementById("a1").innerText = q.answers[0];
-  document.getElementById("a2").innerText = q.answers[1];
-  document.getElementById("a3").innerText = q.answers[2];
-  document.getElementById("a4").innerText = q.answers[3];
 
-  document.getElementById("progress-text").innerText = `Frage ${currentQuestion + 1} von ${questions.length}`;
+  for (let i = 0; i < 4; i++) {
+    const btn = document.getElementById(`a${i + 1}`);
+    if (btn) btn.innerText = q.answers[i] || "";
+  }
+
+  const progText = document.getElementById("progress-text");
+  if (progText)
+    progText.innerText = `Frage ${currentQuestion + 1} von ${questions.length}`;
 }
 
+// --- Fortschrittsbalken ---
 function renderProgress() {
   const bar = document.getElementById("progress-bar");
+  if (!bar) return;
+
   bar.innerHTML = "";
   for (let i = 0; i < questions.length; i++) {
     const span = document.createElement("span");
@@ -66,9 +79,11 @@ function renderProgress() {
   }
 }
 
+// --- Auswahl einer Antwort ---
 function selectAnswer(choice) {
   answers.push(choice);
   currentQuestion++;
+
   if (currentQuestion < questions.length) {
     showQuestion();
     renderProgress();
@@ -77,12 +92,16 @@ function selectAnswer(choice) {
   }
 }
 
+// --- Ergebnisanzeige ---
 function showResults() {
-  document.getElementById("quiz-container").classList.add("hidden");
-  document.getElementById("result-container").classList.remove("hidden");
+  const quiz = document.getElementById("quiz-container");
+  const result = document.getElementById("result-container");
 
-  // Beispielauswertung
-  const result = {
+  if (quiz) quiz.classList.add("hidden");
+  if (result) result.classList.remove("hidden");
+
+  // Beispielhafte Auswertung
+  const recommendation = {
     racket: "Yonex Ezone 100 (2022)",
     desc: "Ideal für rhythmische Grundlinienspieler, die Power und Komfort kombinieren möchten.",
     img: "https://www.tenniswarehouse-europe.com/images/descpageRCYONEXH-YE100R.jpg",
@@ -90,19 +109,17 @@ function showResults() {
   };
 
   document.getElementById("result-content").innerHTML = `
-    <p>${result.desc}</p>
-    <img src="${result.img}" alt="${result.racket}" />
-    <p><a href="${result.link}" target="_blank">➡️ Zum Schläger bei Tennis Warehouse Europe</a></p>
+    <h3>${recommendation.racket}</h3>
+    <p>${recommendation.desc}</p>
+    <img src="${recommendation.img}" alt="${recommendation.racket}" style="max-width:250px;border-radius:10px;margin:1em 0;" />
+    <p><a href="${recommendation.link}" target="_blank" rel="noopener noreferrer">➡️ Zum Schläger bei Tennis Warehouse Europe</a></p>
   `;
 }
 
+// --- Event-Listener für Antwort-Buttons ---
 document.querySelectorAll(".answer").forEach((btn, i) =>
   btn.addEventListener("click", () => selectAnswer(i))
 );
 
+// --- Starte das Quiz ---
 loadQuestions();
-
-
-
-
-
