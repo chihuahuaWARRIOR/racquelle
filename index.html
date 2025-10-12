@@ -3,40 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>racquelle</title>
+  <title>racquelle – Schlägerberatung</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="header">
-    <h1 class="logo">racquelle</h1>
-    <div class="lang-select">
-      <button id="lang-de" class="lang-btn active">DE</button>
-      <button id="lang-en" class="lang-btn">EN</button>
-    </div>
-  </header>
-
-  <main id="quiz-container">
-    <div class="question-box">
-      <div id="question" class="question-text">Frage wird geladen...</div>
-      <div id="progress-text" class="progress-text"></div>
-      <div id="progress-bar" class="progress-bar"></div>
+  <div id="quiz-container">
+    <div id="question-container">
+      <h2 id="question">Frage wird geladen...</h2>
+      <div id="progress-container">
+        <div id="progress-text">Frage 1 von 25</div>
+        <div id="progress-bar"></div>
+      </div>
     </div>
 
-    <div class="answers-grid">
-      <button id="a1" class="answer blue"></button>
-      <button id="a2" class="answer red"></button>
-      <button id="a3" class="answer yellow"></button>
-      <button id="a4" class="answer green"></button>
+    <div id="answers-grid">
+      <button class="answer" id="a1"></button>
+      <button class="answer" id="a2"></button>
+      <button class="answer" id="a3"></button>
+      <button class="answer" id="a4"></button>
     </div>
-  </main>
+  </div>
 
-  <section id="result-container" class="hidden">
+  <div id="result-container" class="hidden">
+    <h2 id="result-title">Deine Empfehlung</h2>
     <div id="result-content"></div>
-  </section>
-
-  <footer class="footer">
-    <a href="#" id="impressum">Impressum</a>
-  </footer>
+  </div>
 
   <script src="app.js"></script>
 </body>
