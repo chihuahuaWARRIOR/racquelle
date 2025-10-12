@@ -32,6 +32,7 @@ body {
   box-sizing: border-box;
 }
 
+/* === Fortschrittsanzeige === */
 #progress-container {
   margin-top: 10px;
 }
@@ -52,12 +53,13 @@ body {
   display: inline-block;
   width: 12px;
   height: 4px;
-  background: #ccc;
+  background: #000; /* Anfang: schwarz */
   border-radius: 2px;
+  transition: background 0.3s ease;
 }
 
 #progress-bar span.active {
-  background: #222;
+  background: #7CFC00; /* hellgrün bei Fortschritt */
 }
 
 /* === Antwort-Grid === */
@@ -105,7 +107,7 @@ body {
 /* === Branding-Inseln === */
 .brand-island {
   position: absolute;
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.6); /* halbtransparent */
   color: black;
   padding: 8px 20px;
   font-weight: 700;
@@ -122,6 +124,7 @@ body {
   top: 0;
   left: 50px;
   z-index: 10;
+  background: rgba(255, 255, 255, 0.6);
 }
 
 /* Kein Unterstrich für Link */
@@ -166,7 +169,7 @@ body {
   opacity: 0.6;
 }
 
-/* Impressum unten rechts – umgedrehte Insel */
+/* Impressum unten rechts – oben abgerundet, unten eckig */
 #footer-island {
   position: fixed;
   bottom: 0;
@@ -178,18 +181,12 @@ body {
   color: black;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
   box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   z-index: 10;
   backdrop-filter: blur(6px);
-}
-
-/* === Fortschrittsanzeige === */
-#progress-bar span:nth-child(odd).active {
-  background: black;
-}
-#progress-bar span:nth-child(even).active {
-  background: lightgreen;
 }
 
 /* === Responsives Verhalten === */
