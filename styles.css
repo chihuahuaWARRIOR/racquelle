@@ -280,5 +280,65 @@ body {
   #progress-bar { gap: 4px; margin-top: 8px; }
   #progress-bar span { width: 10px; height: 4px; }
 }
+/* === Abschlussbildschirm als Overlay (füge ans Ende der CSS) === */
+#result-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255,255,255,0.92); /* leicht weißes Overlay */
+  backdrop-filter: blur(6px);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: #111;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  opacity: 0;
+  pointer-events: none;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+/* sichtbar / interaktiv */
+#result-container.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Innen-Card im Overlay (zentriert, schöner) */
+#result-container .result-card {
+  background: rgba(255,255,255,1);
+  border-radius: 14px;
+  padding: 22px;
+  max-width: 820px;
+  width: 96%;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+  text-align: center;
+}
+
+/* optional: Bild im Ergebnis */
+#result-container .result-card img {
+  max-width: 320px;
+  width: 50%;
+  height: auto;
+  border-radius: 10px;
+  display: block;
+  margin: 12px auto;
+}
+
+/* Restart-Button */
+#result-container .btn-restart {
+  margin-top: 12px;
+  padding: 10px 16px;
+  background: #111;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
 
 
