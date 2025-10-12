@@ -2,7 +2,13 @@ let currentQuestion = 0;
 let answers = [];
 let questions = [];
 
-// Lädt Fragen aus questions.json
+// Sprache automatisch erkennen (Deutsch oder Englisch)
+function getLanguage() {
+  const lang = navigator.language || navigator.userLanguage;
+  return lang.startsWith("de") ? "de" : "en";
+}
+
+// Fragen laden
 async function loadQuestions() {
   try {
     console.log("Fragen werden geladen...");
@@ -13,15 +19,16 @@ async function loadQuestions() {
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
     const data = await response.json();
+    const lang = getLanguage();
 
-    // Wenn JSON ein Objekt mit "questions" enthält, verwende das Array
-    questions = Array.isArray(data) ? data : data.questions;
+    // Nutze die passende Sprachsektion (z. B. data.de)
+    questions = data[lang];
 
     if (!questions || questions.length === 0) {
-      throw new Error("Keine Fragen gefunden");
+      throw new Error(`Keine Fragen in Sprache "${lang}" gefunden`);
     }
 
-    console.log(`Fragen geladen: ${questions.length}`);
+    console.log(`Fragen geladen (${lang}): ${questions.length}`);
     showQuestion();
     renderProgress();
   } catch (error) {
@@ -40,15 +47,13 @@ function showQuestion() {
   }
 
   const q = questions[currentQuestion];
-  document.getElementById("question").innerText = q.text;
+  document.getElementById("question").innerText = q.q;
 
-  // Antwortfelder aktualisieren
   for (let i = 0; i < 4; i++) {
     const btn = document.getElementById(`a${i + 1}`);
     btn.innerText = q.answers[i];
   }
 
-  // Fortschrittsanzeige aktualisieren
   document.getElementById("progress-text").innerText = `Frage ${
     currentQuestion + 1
   } von ${questions.length}`;
@@ -101,5 +106,5 @@ document.querySelectorAll(".answer").forEach((btn, i) =>
   btn.addEventListener("click", () => selectAnswer(i))
 );
 
-// Starte das Quiz
+// Start
 loadQuestions();
