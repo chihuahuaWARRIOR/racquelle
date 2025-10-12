@@ -81,43 +81,91 @@ function selectAnswer(choice) {
   }
 }
 
+// --- Zeige Auswertung als Overlay (füge in app.js ein / ersetze showResults) ---
 function showResults() {
-  document.getElementById("quiz-container").classList.add("hidden");
-  document.getElementById("result-container").classList.remove("hidden");
+  // Beispiel-Auswertung (du kannst hier später die echte Logik einsetzen)
+  const result = {
+    racket: "Yonex Ezone 100 (2022)",
+    desc: "Ideal für rhythmische Grundlinienspieler: guter Mix aus Komfort und Power.",
+    img: "https://www.tenniswarehouse-europe.com/images/descpageRCYONEXH-YE100R.jpg",
+    link: "https://www.tenniswarehouse-europe.com/Yonex_EZONE_100_2022/descpageRCYONEXH-YE100R-DE.html"
+  };
 
-  // Beispielhafte einfache Auswertung
-  const resultIndex = Math.floor(Math.random() * 3);
-  let result;
+  // Baue das HTML für das Overlay (result-card)
+  const html = `
+    <div class="result-card" role="dialog" aria-labelledby="result-title">
+      <h2 id="result-title">${escapeHtml(result.racket)}</h2>
+      <p>${escapeHtml(result.desc)}</p>
+      <img src="${escapeHtml(result.img)}" alt="${escapeHtml(result.racket)}" />
+      <p><a href="${escapeHtml(result.link)}" target="_blank" rel="noopener">➡️ Produkt ansehen</a></p>
+      <button class="btn-restart" id="btn-restart">Quiz neu starten</button>
+    </div>
+  `;
 
-  if (resultIndex === 0) {
-    result = {
-      racket: "Yonex Ezone 100 (2022)",
-      desc: "Ideal für rhythmische Grundlinienspieler, die Power und Komfort kombinieren möchten.",
-      img: "https://www.tenniswarehouse-europe.com/images/descpageRCYONEXH-YE100R.jpg",
-      link: "https://www.tenniswarehouse-europe.com/Yonex_EZONE_100_2022/descpageRCYONEXH-YE100R-DE.html"
-    };
-  } else if (resultIndex === 1) {
-    result = {
-      racket: "Babolat Pure Drive",
-      desc: "Perfekt für aggressive Spieler, die Spin und Power suchen.",
-      img: "https://www.tenniswarehouse-europe.com/images/descpageRCBAB-PD300R-1.jpg",
-      link: "https://www.tenniswarehouse-europe.com/Babolat_Pure_Drive/descpageRCBAB-PD300R-DE.html"
-    };
-  } else {
-    result = {
-      racket: "Head Speed MP 2024",
-      desc: "Ausgewogen zwischen Kontrolle und Power – ideal für Allrounder.",
-      img: "https://www.tenniswarehouse-europe.com/images/descpageRCHEADH-HSMP24-1.jpg",
-      link: "https://www.tenniswarehouse-europe.com/Head_Speed_MP_2024/descpageRCHEADH-HSMP24-DE.html"
-    };
+  const rc = document.getElementById("result-container");
+  if (!rc) {
+    console.error("Kein #result-container gefunden.");
+    return;
   }
 
-  document.getElementById("result-content").innerHTML = `
-    <h2>${result.racket}</h2>
-    <p>${result.desc}</p>
-    <img src="${result.img}" alt="${result.racket}" style="max-width:300px;border-radius:12px;margin:10px 0;">
-    <p><a href="${result.link}" target="_blank">➡️ Zum Schläger bei Tennis Warehouse Europe</a></p>
-  `;
+  rc.innerHTML = html;
+  // overlay sichtbar machen
+  rc.classList.add("active");
+
+  // optional: scroll stoppen im Hintergrund (besseres UX auf Mobil)
+  document.documentElement.style.overflow = "hidden";
+  document.body.style.overflow = "hidden";
+
+  // Restart-Handler binden
+  const restartBtn = document.getElementById("btn-restart");
+  if (restartBtn) {
+    restartBtn.addEventListener("click", restartQuiz);
+  }
+}
+
+// --- Restart-Funktion: Overlay schließen + Quiz zurücksetzen ---
+function restartQuiz() {
+  // close overlay
+  const rc = document.getElementById("result-container");
+  if (rc) {
+    rc.classList.remove("active");
+    // optional: leere Inhalt (sauber)
+    rc.innerHTML = "";
+  }
+
+  // re-enable scrolling
+  document.documentElement.style.overflow = "";
+  document.body.style.overflow = "";
+
+  // reset quiz state (angepasst an deine Variable-Namen)
+  currentQuestion = 0;
+  answers = [];
+
+  // zeige wieder quiz (falls du elements ausgeblendet hast)
+  const quizContainer = document.getElementById("quiz-container");
+  if (quizContainer) quizContainer.classList.remove("hidden");
+
+  // falls du #question-container oder #answers-grid versteckt hast, zeige sie
+  const qCont = document.getElementById("question-container");
+  if (qCont) qCont.classList.remove("hidden");
+  const answersGrid = document.getElementById("answers-grid");
+  if (answersGrid) answersGrid.classList.remove("hidden");
+
+  // die Progress-Bar resetten
+  const prog = document.getElementById("progress-bar");
+  if (prog) {
+    // entferne alle 'active' Klassen
+    const dots = prog.querySelectorAll("span");
+    dots.forEach(d => d.classList.remove("active"));
+  }
+
+  // render first question again
+  if (typeof showQuestion === "function") showQuestion();
+  if (typeof renderProgress === "function") renderProgress();
+}
+function escapeHtml(str) {
+  if (!str) return "";
+  return String(str).replace(/[&<>"']/g, (s) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
 }
 
 
@@ -147,4 +195,5 @@ if (savedLang) {
 } else {
   loadQuestions();
 }
+
 
