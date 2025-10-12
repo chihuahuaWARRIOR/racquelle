@@ -239,7 +239,7 @@ body {
     transform: none;
     width: 92%;
     max-width: 640px;
-    margin: 18px auto;                /* oben Abstand, dann normaler Fluss */
+    margin: 24px auto;                /* oben Abstand, dann normaler Fluss */
     min-height: 200px;                /* kleiner als Desktop, deckt kurze Fragen */
     padding: 14px 16px 18px 16px;
     box-sizing: border-box;
@@ -345,6 +345,7 @@ body {
   border-radius: 8px;
   cursor: pointer;
 }
+
 
 
 
