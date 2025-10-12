@@ -260,7 +260,7 @@ body {
   }
 
   .question {
-    font-size: 0.70rem;
+    font-size: 0.10rem;
     padding: 14px;
     border-radius: 12px;
   }
@@ -345,6 +345,7 @@ body {
   border-radius: 8px;
   cursor: pointer;
 }
+
 
 
 
