@@ -1,48 +1,78 @@
+/* ==============================
+   Tennis Racket Finder Quiz App
+   ============================== */
+
+// --- Globale Variablen ---
 let currentQuestion = 0;
 let answers = [];
 let questions = [];
+let rackets = [];
+let playerProfile = {}; // TW/E-Kategorien werden hier gesammelt
 
-// Sprache automatisch erkennen (Deutsch oder Englisch)
+/* ==============================
+   SPRACHE & INITIALISIERUNG
+============================== */
+
 function getLanguage() {
+  const saved = localStorage.getItem("language");
+  if (saved) return saved;
   const lang = navigator.language || navigator.userLanguage;
   return lang.startsWith("de") ? "de" : "en";
 }
 
-// Fragen laden
+async function initApp() {
+  await Promise.all([loadQuestions(), loadRackets()]);
+  renderProgress();
+}
+
+/* ==============================
+   LADEN DER QUESTIONS UND RACKETS
+============================== */
+
 async function loadQuestions() {
   try {
-    console.log("Fragen werden geladen...");
     const response = await fetch("questions.json", {
-      headers: { "Cache-Control": "no-cache", "Pragma": "no-cache" },
+      headers: { "Cache-Control": "no-cache", "Pragma": "no-cache" }
     });
-
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
     const data = await response.json();
-    const lang = getLanguage();
 
-    // Nutze die passende Sprachsektion (z. B. data.de)
+    const lang = getLanguage();
     questions = data[lang];
 
-    if (!questions || questions.length === 0) {
+    if (!questions || questions.length === 0)
       throw new Error(`Keine Fragen in Sprache "${lang}" gefunden`);
-    }
 
-    console.log(`Fragen geladen (${lang}): ${questions.length}`);
     showQuestion();
-    renderProgress();
-  } catch (error) {
-    console.error("Fehler beim Laden der Fragen:", error);
-    document.getElementById("question").innerText =
-      "Fragen konnten nicht geladen werden 😕";
+  } catch (err) {
+    console.error("Fehler beim Laden der Fragen:", err);
+    document.getElementById("question").innerText = "Fragen konnten nicht geladen werden 😕";
   }
 }
+
+async function loadRackets() {
+  try {
+    const response = await fetch("rackets.json", {
+      headers: { "Cache-Control": "no-cache", "Pragma": "no-cache" }
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const data = await response.json();
+    rackets = data.rackets;
+    console.log(`🎾 ${rackets.length} Rackets geladen.`);
+  } catch (err) {
+    console.error("Fehler beim Laden der Rackets:", err);
+  }
+}
+
+/* ==============================
+   QUIZ ANZEIGE
+============================== */
 
 function showQuestion() {
   if (!questions || questions.length === 0) return;
 
   if (currentQuestion >= questions.length) {
-    showResults();
+    showModeSelection(); // Nach der letzten Frage: Modusauswahl
     return;
   }
 
@@ -51,14 +81,16 @@ function showQuestion() {
 
   for (let i = 0; i < 4; i++) {
     const btn = document.getElementById(`a${i + 1}`);
-    btn.innerText = q.answers[i];
+    btn.innerText = q.answers[i].text;
   }
 
-  document.getElementById("progress-text").innerText = `Frage ${
-    currentQuestion + 1
-  } von ${questions.length}`;
+  document.getElementById("progress-text").innerText = `Frage ${currentQuestion + 1} von ${questions.length}`;
   renderProgress();
 }
+
+/* ==============================
+   FORTSCHRITTSANZEIGE
+============================== */
 
 function renderProgress() {
   const bar = document.getElementById("progress-bar");
@@ -70,146 +102,98 @@ function renderProgress() {
   }
 }
 
+/* ==============================
+   ANTWORT-LOGIK & PROFIL-BERECHNUNG
+============================== */
+
 function selectAnswer(choice) {
+  const q = questions[currentQuestion];
+  const selected = q.answers[choice];
+
+  // Jede Antwort beeinflusst TW/E-Kategorien (im Fragenobjekt hinterlegt)
+  for (const [key, value] of Object.entries(selected.effects)) {
+    if (!playerProfile[key]) playerProfile[key] = 0;
+    playerProfile[key] += value;
+  }
+
   answers.push(choice);
   currentQuestion++;
 
   if (currentQuestion < questions.length) {
     showQuestion();
   } else {
-    showResults();
+    showModeSelection();
   }
 }
 
-// --- Zeige Auswertung als Overlay (füge in app.js ein / ersetze showResults) ---
-function showResults() {
-  // Beispiel-Auswertung (du kannst hier später die echte Logik einsetzen)
-  const result = {
-    racket: "Yonex Ezone 100 (2022)",
-    desc: "Ideal für rhythmische Grundlinienspieler: guter Mix aus Komfort und Power.",
-    img: "https://www.tenniswarehouse-europe.com/images/descpageRCYONEXH-YE100R.jpg",
-    link: "https://www.tenniswarehouse-europe.com/Yonex_EZONE_100_2022/descpageRCYONEXH-YE100R-DE.html"
-  };
+/* ==============================
+   MODUSWAHL (Stärken oder Schwächen)
+============================== */
 
-  // Baue das HTML für das Overlay (result-card)
-  const html = `
-    <div class="result-card" role="dialog" aria-labelledby="result-title">
-      <h2 id="result-title">${escapeHtml(result.racket)}</h2>
-      <p>${escapeHtml(result.desc)}</p>
-      <img src="${escapeHtml(result.img)}" alt="${escapeHtml(result.racket)}" />
-      <p><a href="${escapeHtml(result.link)}" target="_blank" rel="noopener">➡️ Produkt ansehen</a></p>
-      <button class="btn-restart" id="btn-restart">Quiz neu starten</button>
+function showModeSelection() {
+  const rc = document.getElementById("result-container");
+  document.getElementById("question-container").classList.add("hidden");
+  document.getElementById("answers-grid").classList.add("hidden");
+  rc.classList.remove("hidden");
+
+  rc.innerHTML = `
+    <div class="mode-select">
+      <h2>Wie soll die Schlägerempfehlung erfolgen?</h2>
+      <button onclick="calculateRecommendation('strengths')">💪 Stärken ausbauen</button>
+      <button onclick="calculateRecommendation('weaknesses')">⚖️ Schwächen ausgleichen</button>
     </div>
   `;
+}
 
-  const rc = document.getElementById("result-container");
-  if (!rc) {
-    console.error("Kein #result-container gefunden.");
-    return;
+/* ==============================
+   RACKET-MATCHING ALGORITHMUS
+============================== */
+
+function calculateRecommendation(mode) {
+  const racket = findBestRacket(playerProfile, mode);
+  showResults(playerProfile, racket);
+}
+
+function findBestRacket(profile, mode = "strengths") {
+  let best = null;
+  let bestScore = Infinity;
+
+  for (const r of rackets) {
+    let diff = 0;
+    for (const cat of Object.keys(r.stats)) {
+      const p = profile[cat] || 5; // Standardwert Mitte
+      if (mode === "strengths")
+        diff += Math.abs(p - r.stats[cat]);
+      else
+        diff += Math.abs((10 - p) - r.stats[cat]);
+    }
+    if (diff < bestScore) {
+      bestScore = diff;
+      best = r;
+    }
   }
 
-  rc.innerHTML = html;
-  // overlay sichtbar machen
-  rc.classList.add("active");
-
-  // optional: scroll stoppen im Hintergrund (besseres UX auf Mobil)
-  document.documentElement.style.overflow = "hidden";
-  document.body.style.overflow = "hidden";
-
-  // Restart-Handler binden
-  const restartBtn = document.getElementById("btn-restart");
-  if (restartBtn) {
-    restartBtn.addEventListener("click", restartQuiz);
-  }
+  return best;
 }
 
-// --- Restart-Funktion: Overlay schließen + Quiz zurücksetzen ---
-function restartQuiz() {
-  // close overlay
-  const rc = document.getElementById("result-container");
-  if (rc) {
-    rc.classList.remove("active");
-    // optional: leere Inhalt (sauber)
-    rc.innerHTML = "";
-  }
+/* ==============================
+   SPIELSTIL-ANALYSE
+============================== */
 
-  // re-enable scrolling
-  document.documentElement.style.overflow = "";
-  document.body.style.overflow = "";
-
-  // reset quiz state (angepasst an deine Variable-Namen)
-  currentQuestion = 0;
-  answers = [];
-
-  // zeige wieder quiz (falls du elements ausgeblendet hast)
-  const quizContainer = document.getElementById("quiz-container");
-  if (quizContainer) quizContainer.classList.remove("hidden");
-
-  // falls du #question-container oder #answers-grid versteckt hast, zeige sie
-  const qCont = document.getElementById("question-container");
-  if (qCont) qCont.classList.remove("hidden");
-  const answersGrid = document.getElementById("answers-grid");
-  if (answersGrid) answersGrid.classList.remove("hidden");
-
-  // die Progress-Bar resetten
-  const prog = document.getElementById("progress-bar");
-  if (prog) {
-    // entferne alle 'active' Klassen
-    const dots = prog.querySelectorAll("span");
-    dots.forEach(d => d.classList.remove("active"));
-  }
-
-  // render first question again
-  if (typeof showQuestion === "function") showQuestion();
-  if (typeof renderProgress === "function") renderProgress();
-}
-function escapeHtml(str) {
-  if (!str) return "";
-  return String(str).replace(/[&<>"']/g, (s) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
-}
-
-
-// Event Listener für Buttons
-document.querySelectorAll(".answer").forEach((btn, i) =>
-  btn.addEventListener("click", () => selectAnswer(i))
-);
-
-// Start
-loadQuestions();
-
-// Sprache umschalten
-document.getElementById("lang-de").addEventListener("click", () => switchLang("de"));
-document.getElementById("lang-en").addEventListener("click", () => switchLang("en"));
-
-function switchLang(lang) {
-  document.getElementById("lang-de").classList.toggle("active", lang === "de");
-  document.getElementById("lang-en").classList.toggle("active", lang === "en");
-  localStorage.setItem("language", lang);
-  loadQuestions();
-}
-
-// Sprachpräferenz merken
-const savedLang = localStorage.getItem("language");
-if (savedLang) {
-  switchLang(savedLang);
-} else {
-  loadQuestions();
-}
-// === Style-Erkennung auf Basis des Profils ===
 function getPlayerStyle(profile) {
   const c = profile;
-  const avg = Object.values(c).reduce((a,b)=>a+b,0) / Object.values(c).length;
+  const avg = Object.values(c).reduce((a, b) => a + b, 0) / Object.values(c).length;
 
   const styleScores = {
-    Control: c.Control + c.Comfort - c.Power,
-    Power: c.Power + c.Topspin - c.Control,
-    Allround: -Math.abs(c.Power - c.Control) + avg,
-    Offensive: c.Power + c.Serves + c.Volleys,
-    Defensive: c.Control + c.Topspin + c.Comfort,
-    Touch: c["Touch / Feel"] + c.Volleys + c.Maneuverability
+    Control: (c.Control || 0) + (c.Comfort || 0) - (c.Power || 0),
+    Power: (c.Power || 0) + (c.Topspin || 0) - (c.Control || 0),
+    Allround: -Math.abs((c.Power || 0) - (c.Control || 0)) + avg,
+    Offensive: (c.Power || 0) + (c.Serves || 0) + (c.Volleys || 0),
+    Defensive: (c.Control || 0) + (c.Topspin || 0) + (c.Comfort || 0),
+    Touch: (c["Touch / Feel"] || 0) + (c.Volleys || 0) + (c.Maneuverability || 0)
   };
 
-  const bestStyle = Object.entries(styleScores).sort((a,b)=>b[1]-a[1])[0][0];
+  const bestStyle = Object.entries(styleScores).sort((a, b) => b[1] - a[1])[0][0];
 
   const descriptions = {
     Control: "Du bist ein präziser Spieler, der lieber sicher platziert als mit roher Gewalt punktet. Kontrolle, Stabilität und Technik sind deine größten Stärken.",
@@ -223,69 +207,86 @@ function getPlayerStyle(profile) {
   return { name: bestStyle, text: descriptions[bestStyle] };
 }
 
-// === Empfehlung anzeigen ===
+/* ==============================
+   ERGEBNISSE ANZEIGEN
+============================== */
+
 function showResults(profile, racket) {
   const style = getPlayerStyle(profile);
   const rc = document.getElementById("result-container");
-  document.getElementById("answers-grid").classList.add("hidden");
-  document.getElementById("question-container").classList.add("hidden");
-  rc.classList.remove("hidden");
 
   rc.innerHTML = `
-    <div class="result-card">
+    <div class="result-card active">
       <h2>${racket.name}</h2>
       <img src="${racket.img}" alt="${racket.name}" />
       <h3>Spielstil: ${style.name}</h3>
       <p>${style.text}</p>
 
       <div class="matrix">
-        ${Object.entries(profile).map(([k,v]) => `
+        ${Object.entries(profile)
+          .map(
+            ([k, v]) => `
           <div class="matrix-row">
             <span>${k}</span>
-            <div class="bar" style="--w:${v*10}%;"></div>
-          </div>`).join("")}
+            <div class="bar" style="--w:${Math.min(v * 10, 100)}%;"></div>
+          </div>`
+          )
+          .join("")}
       </div>
 
       <p>Basierend auf deinem Stil empfehlen wir:</p>
-      <p><a href="${racket.url}" target="_blank">➡️ Zum Schläger</a></p>
+      <p><a href="${racket.url}" target="_blank">➡️ ${racket.name} ansehen</a></p>
 
       <button class="btn-restart" onclick="restartQuiz()">Quiz neu starten</button>
     </div>
   `;
+
+  document.documentElement.style.overflow = "hidden";
+  document.body.style.overflow = "hidden";
 }
 
-// === Optional: Modusauswahl ===
-function showModeSelection() {
-  const rc = document.getElementById("result-container");
-  rc.innerHTML = `
-    <div class="mode-select">
-      <h2>Wie soll die Schlägerempfehlung erfolgen?</h2>
-      <button onclick="calculateRecommendation('strengths')">Stärken ausbauen</button>
-      <button onclick="calculateRecommendation('weaknesses')">Schwächen ausgleichen</button>
-    </div>
-  `;
+/* ==============================
+   QUIZ NEU STARTEN
+============================== */
+
+function restartQuiz() {
+  currentQuestion = 0;
+  answers = [];
+  playerProfile = {};
+
+  document.getElementById("result-container").innerHTML = "";
+  document.getElementById("result-container").classList.add("hidden");
+
+  document.getElementById("question-container").classList.remove("hidden");
+  document.getElementById("answers-grid").classList.remove("hidden");
+
+  document.documentElement.style.overflow = "";
+  document.body.style.overflow = "";
+
+  showQuestion();
+  renderProgress();
 }
 
-// === Racket-Matching ===
-function findBestRacket(profile, mode = "strengths") {
-  let best = null;
-  let bestScore = Infinity;
-  for (const r of rackets) {
-    let diff = 0;
-    for (const cat of Object.keys(r.stats)) {
-      const p = profile[cat] || 0;
-      if (mode === "strengths")
-        diff += Math.abs(p - r.stats[cat]);
-      else
-        diff += Math.abs((10 - p) - r.stats[cat]);
-    }
-    if (diff < bestScore) {
-      bestScore = diff;
-      best = r;
-    }
-  }
-  return best;
+/* ==============================
+   SPRACHUMSCHALTER
+============================== */
+
+document.getElementById("lang-de").addEventListener("click", () => switchLang("de"));
+document.getElementById("lang-en").addEventListener("click", () => switchLang("en"));
+
+function switchLang(lang) {
+  localStorage.setItem("language", lang);
+  document.getElementById("lang-de").classList.toggle("active", lang === "de");
+  document.getElementById("lang-en").classList.toggle("active", lang === "en");
+  loadQuestions();
 }
 
+/* ==============================
+   INITIAL START
+============================== */
 
+document.querySelectorAll(".answer").forEach((btn, i) =>
+  btn.addEventListener("click", () => selectAnswer(i))
+);
 
+initApp();
