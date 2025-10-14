@@ -10,7 +10,7 @@ function getLanguage() {
   return navLang.startsWith("de") ? "de" : "en";
 }
 
-// === Fragen & Schläger laden ===
+// === Daten laden ===
 async function loadData() {
   try {
     const [qRes, rRes] = await Promise.all([
@@ -79,36 +79,84 @@ function selectAnswer(effects) {
   showQuestion();
 }
 
-// === Ergebnisse anzeigen ===
+// === Ergebnisse anzeigen (mit Overlay) ===
 function showResults() {
-  const rc = document.getElementById("result-container");
-  const quiz = document.getElementById("quiz-container");
-  quiz.classList.add("hidden");
-  rc.classList.add("active");
+  const qList = questions[lang];
+  const overlay = document.createElement("div");
+  overlay.id = "overlay";
+  overlay.style.position = "fixed";
+  overlay.style.top = "0";
+  overlay.style.left = "0";
+  overlay.style.width = "100%";
+  overlay.style.height = "100%";
+  overlay.style.background = "rgba(255,255,255,0.9)";
+  overlay.style.backdropFilter = "blur(6px)";
+  overlay.style.display = "flex";
+  overlay.style.flexDirection = "column";
+  overlay.style.alignItems = "center";
+  overlay.style.justifyContent = "center";
+  overlay.style.padding = "2rem";
+  overlay.style.zIndex = "2000";
+  overlay.style.textAlign = "center";
+  overlay.style.overflowY = "auto";
+  overlay.style.animation = "fadeIn 0.8s ease";
 
   const bestRacket = findBestRacket(userProfile);
-  rc.innerHTML = `
-    <div class="result-card">
-      <h2>${bestRacket.name}</h2>
-      <img src="${bestRacket.img}" alt="${bestRacket.name}" />
-      <p>${lang === "de" ? "Basierend auf deinen Antworten empfehlen wir:" : "Based on your answers we recommend:"}</p>
-      <p><a href="${bestRacket.url}" target="_blank">➡️ ${bestRacket.name}</a></p>
-      <button class="btn-restart" onclick="restartQuiz()">${lang === "de" ? "Quiz neu starten" : "Restart Quiz"}</button>
+  const styleDesc = getPlayStyleDescription(userProfile);
+
+  // Matrix
+  const matrix = Object.entries(userProfile)
+    .map(([key, val]) => `<tr><td>${key}</td><td>${val}</td></tr>`)
+    .join("");
+
+  overlay.innerHTML = `
+    <div class="result-card" style="max-width: 600px; width: 90%; background: rgba(255,255,255,0.7); border-radius: 20px; padding: 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+      <h2 style="margin-bottom:1rem;">🎾 ${lang === "de" ? "Deine Schlägerempfehlung" : "Your Racket Recommendation"}</h2>
+      <img src="${bestRacket.img}" alt="${bestRacket.name}" style="max-width:180px; border-radius:10px; margin-bottom:1rem;">
+      <h3>${bestRacket.name}</h3>
+      <p><a href="${bestRacket.url}" target="_blank">➡️ ${lang === "de" ? "Mehr erfahren" : "Learn more"}</a></p>
+      <hr style="margin: 1.5rem 0;">
+      <h3>${lang === "de" ? "Spielstil" : "Play Style"}</h3>
+      <p>${styleDesc}</p>
+      <hr style="margin: 1.5rem 0;">
+      <h3>${lang === "de" ? "Dein Spielerprofil" : "Your Player Profile"}</h3>
+      <table style="margin:auto; border-collapse: collapse;">
+        ${matrix}
+      </table>
+      <button onclick="restartQuiz()" style="margin-top:2rem; background:black; color:white; padding:0.8rem 1.5rem; border:none; border-radius:12px; font-weight:bold;">${lang === "de" ? "Quiz neu starten" : "Restart Quiz"}</button>
     </div>
   `;
+
+  document.body.appendChild(overlay);
 }
 
-// === Quiz zurücksetzen ===
-function restartQuiz() {
-  document.getElementById("result-container").classList.remove("active");
-  document.getElementById("quiz-container").classList.remove("hidden");
-  currentQuestion = 0;
-  userProfile = {};
-  showQuestion();
-  renderProgress();
+// === Spielstilbeschreibung ===
+function getPlayStyleDescription(profile) {
+  const power = profile.Power || 0;
+  const control = profile.Control || 0;
+  const comfort = profile.Comfort || 0;
+  const maneuver = profile.Maneuverability || 0;
+
+  if (power > control && maneuver > comfort) {
+    return lang === "de"
+      ? "Du bist ein aggressiver Baseliner, der Druck von der Grundlinie aus aufbaut und das Tempo bestimmt."
+      : "You're an aggressive baseliner who dictates play from the back of the court.";
+  } else if (control > power && comfort > maneuver) {
+    return lang === "de"
+      ? "Du bist ein Allround-Spieler, der Präzision und Gefühl bevorzugt und in jeder Situation Lösungen findet."
+      : "You're an all-court player valuing precision and touch, adapting to any situation.";
+  } else if (comfort > 3) {
+    return lang === "de"
+      ? "Du spielst kontrolliert und effizient, achtest auf Armschonung und Konstanz."
+      : "You play with control and efficiency, focusing on comfort and consistency.";
+  } else {
+    return lang === "de"
+      ? "Du bist ein ausgewogener Spieler mit soliden Grundlagen und vielseitigem Spielstil."
+      : "You're a balanced player with a solid, versatile game.";
+  }
 }
 
-// === Schläger-Vergleich ===
+// === Schlägervergleich ===
 function findBestRacket(profile) {
   let best = null;
   let bestScore = Infinity;
@@ -133,17 +181,17 @@ function createBackButton() {
   btn.innerHTML = "&#8592;";
   Object.assign(btn.style, {
     position: "fixed",
-    left: "10px",
+    left: "8px",
     top: "50%",
     transform: "translateY(-50%)",
-    width: "40px",
-    height: "40px",
+    width: "38px",
+    height: "38px",
     background: "rgba(255,255,255,0.6)",
     borderRadius: "50%",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    fontSize: "1.3rem",
+    fontSize: "1.2rem",
     fontWeight: "bold",
     cursor: "pointer",
     userSelect: "none",
@@ -166,6 +214,16 @@ function goBack() {
 function switchLang(newLang) {
   lang = newLang;
   localStorage.setItem("language", newLang);
+  currentQuestion = 0;
+  userProfile = {};
+  showQuestion();
+  renderProgress();
+}
+
+// === Quiz neustarten ===
+function restartQuiz() {
+  const overlay = document.getElementById("overlay");
+  if (overlay) overlay.remove();
   currentQuestion = 0;
   userProfile = {};
   showQuestion();
