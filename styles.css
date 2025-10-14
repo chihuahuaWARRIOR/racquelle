@@ -240,7 +240,7 @@ body {
     width: 92%;
     max-width: 640px;
     margin: 32px auto;                /* oben Abstand, dann normaler Fluss */
-    min-height: 140px;                /* kleiner als Desktop, deckt kurze Fragen */
+    min-height: 160px;                /* kleiner als Desktop, deckt kurze Fragen */
     padding: 14px 16px 18px 16px;
     box-sizing: border-box;
     z-index: 5;                        /* bleibt über Grid, aber nicht fixiert */
@@ -340,6 +340,7 @@ body {
   border-radius: 8px;
   cursor: pointer;
 }
+
 
 
 
