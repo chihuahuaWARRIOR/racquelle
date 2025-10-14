@@ -1,0 +1,84 @@
+{
+  "rackets": [
+    {
+      "name": "Babolat Pure Drive 2021",
+      "brand": "Babolat",
+      "img": "https://www.tenniswarehouse-europe.com/images/descpageRCBAB-BPD21R.jpg",
+      "url": "https://www.tenniswarehouse-europe.com/Babolat_Pure_Drive_2021/descpageRCBAB-BPD21R-DE.html",
+      "stats": {
+        "Groundstrokes": 8.5,
+        "Volleys": 8.0,
+        "Serves": 8.8,
+        "Returns": 8.2,
+        "Power": 9.2,
+        "Control": 6.8,
+        "Maneuverability": 8.3,
+        "Stability": 8.0,
+        "Comfort": 7.2,
+        "Touch / Feel": 7.5,
+        "Topspin": 8.7,
+        "Slice": 8.4
+      }
+    },
+    {
+      "name": "Yonex Ezone 100 (2022)",
+      "brand": "Yonex",
+      "img": "https://www.tenniswarehouse-europe.com/images/descpageRCYONEXH-YE100R.jpg",
+      "url": "https://www.tenniswarehouse-europe.com/Yonex_EZONE_100_2022/descpageRCYONEXH-YE100R-DE.html",
+      "stats": {
+        "Groundstrokes": 8.2,
+        "Volleys": 8.2,
+        "Serves": 8.1,
+        "Returns": 7.9,
+        "Power": 7.8,
+        "Control": 8.3,
+        "Maneuverability": 8.3,
+        "Stability": 8.0,
+        "Comfort": 9.1,
+        "Touch / Feel": 8.9,
+        "Topspin": 8.7,
+        "Slice": 8.9
+      }
+    },
+    {
+      "name": "Wilson Blade 98 16x19 v9",
+      "brand": "Wilson",
+      "img": "https://www.tenniswarehouse-europe.com/images/descpageRCWILSONH-WB9819V9-1.jpg",
+      "url": "https://www.tenniswarehouse-europe.com/Wilson_Blade_98_16x19_v9/descpageRCWILSONH-WB9819V9-DE.html",
+      "stats": {
+        "Groundstrokes": 8.5,
+        "Volleys": 8.3,
+        "Serves": 7.8,
+        "Returns": 8.4,
+        "Power": 7.1,
+        "Control": 9.1,
+        "Maneuverability": 8.0,
+        "Stability": 8.7,
+        "Comfort": 8.2,
+        "Touch / Feel": 8.8,
+        "Topspin": 7.5,
+        "Slice": 8.6
+      }
+    },
+    {
+      "name": "Head Speed MP 2024",
+      "brand": "Head",
+      "img": "https://www.tenniswarehouse-europe.com/images/descpageRCHEADH-HSPMP24R-1.jpg",
+      "url": "https://www.tenniswarehouse-europe.com/Head_Speed_MP_2024/descpageRCHEADH-HSPMP24R-DE.html",
+      "stats": {
+        "Groundstrokes": 8.4,
+        "Volleys": 8.6,
+        "Serves": 8.3,
+        "Returns": 8.1,
+        "Power": 7.9,
+        "Control": 8.5,
+        "Maneuverability": 8.2,
+        "Stability": 8.3,
+        "Comfort": 8.7,
+        "Touch / Feel": 8.8,
+        "Topspin": 8.2,
+        "Slice": 8.5
+      }
+    }
+  ]
+}
