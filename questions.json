@@ -153,5 +153,6 @@
         { "text": "Selten – ich blocke lieber zurück", "effects": { "Returns": 1, "Comfort": 1 } },
         { "text": "Ich spiele kein Einzel / selten Returns", "effects": {} }
       ]
-    }
+  
+
 
