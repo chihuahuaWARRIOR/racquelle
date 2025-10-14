@@ -1,111 +1,90 @@
-{
-  "de": [
-    {
-      "q": "Du spielst einen starken ersten Aufschlag, dein Gegner blockt ihn nur kurz zurück. Was machst du?",
-      "answers": ["Sofort nach vorne und Volley", "Bleibe hinten und platziere sicher", "Gehe in den Platz und greife an", "Spiele Topspin-Drive cross"],
-      "choices": ["a", "b", "c", "d"]
-    },
-    {
-      "q": "Dein Gegner spielt einen hohen Ball auf deine Rückhand. Wie reagierst du?",
-      "answers": ["Umlaufen und mit Vorhand angreifen", "Slice zur Kontrolle", "Treffe ihn früh aggressiv", "Verteidige sicher mit Spin"],
-      "choices": ["a", "b", "c", "d"]
-    },
-    {
-      "q": "Beim Return eines zweiten Aufschlags: Was ist dein Plan?",
-      "answers": ["Risiko – Return Winner suchen", "Sicherer Spin-Return in die Mitte", "Flach und präzise cross", "Aggressiver Chip & Charge"],
-      "choices": ["a", "b", "c", "d"]
-    },
-    {
-      "q": "Langer Ballwechsel, Gegner ist leicht aus der Balance. Was machst du?",
-      "answers": ["Sofort Attacke longline", "Weiterspielen, bis klare Chance", "Drop Shot", "Kick-Angriff cross"],
-      "choices": ["a", "b", "c", "d"]
-    },
-    {
-      "q": "Beim Stoppball reagierst du schnell und erreichst ihn – was tust du?",
-      "answers": ["Gegenslice kurz cross", "Heb ihn hoch zurück", "Drive longline", "Spiele Lob"],
-      "choices": ["a", "b", "c", "d"]
-    },
-    {
-      "q": "Wie gewinnst du die meisten Punkte?",
-      "answers": ["Mit Spin und Höhe", "Mit Power und Präzision", "Mit Winkel und Platzierung", "Mit Variation und Touch"],
-      "choices": ["a", "b", "c", "d"]
-    },
-    {
-      "q": "Wie gehst du mit hohem Tempo des Gegners um?",
-      "answers": ["Nutze sein Tempo für Spin", "Blocke kontrolliert", "Gehe in die Offensive", "Spiele bewusst langsamer"],
-      "choices": ["a", "b", "c", "d"]
-    },
-    {
-      "q": "Dein Lieblingsschlag?",
-      "answers": ["Topspin-Vorhand", "Flache Rückhand", "Inside-Out Vorhand", "Drop Shot oder Volley"],
-      "choices": ["a", "b", "c", "d"]
-    },
-    {
-      "q": "Wie würdest du dein Spieltempo beschreiben?",
-      "answers": ["Variabel, aber oft aggressiv", "Ruhig und kontrolliert", "Explosiv und schnell", "Rythmusorientiert mit viel Spin"],
-      "choices": ["a", "b", "c", "d"]
-    },
-    {
-      "q": "Was ist dir beim Schläger am wichtigsten?",
-      "answers": ["Spinpotenzial", "Power", "Kontrolle", "Gefühl"],
-      "choices": ["a", "b", "c", "d"]
-    },
-    {
-      "q": "Wie schwer darf dein Schläger sein?",
-      "answers": ["Leicht (unter 295g)", "Mittel (295–310g)", "Schwer (310–330g)", "Sehr schwer (330g+)"],
-      "choices": ["a", "b", "c", "d"]
-    },
-    {
-      "q": "Bevorzugst du ein dickes oder dünnes Rahmenprofil?",
-      "answers": ["Dick (Power)", "Mittel", "Dünn (Kontrolle)", "Egal, Hauptsache ausgewogen"],
-      "choices": ["a", "b", "c", "d"]
-    },
-    {
-      "q": "Wie soll sich der Schwung anfühlen?",
-      "answers": ["Leicht und schnell", "Stabil und solide", "Mittelding", "Aerodynamisch mit Schwunggewicht"],
-      "choices": ["a", "b", "c", "d"]
-    },
-    {
-      "q": "Wie oft gehst du ans Netz?",
-      "answers": ["Selten", "Gelegentlich", "Oft", "Nur bei Gelegenheitspunkten"],
-      "choices": ["a", "b", "c", "d"]
-    },
-    {
-      "q": "Wie wichtig ist dir Komfort (Vibration, Armfreundlichkeit)?",
-      "answers": ["Sehr wichtig", "Eher wichtig", "Nicht so wichtig", "Egal – Hauptsache Leistung"],
-      "choices": ["a", "b", "c", "d"]
-    },
-    {
-      "q": "Wie spielst du bei Wind?",
-      "answers": ["Mit mehr Spin", "Mit flachen Schlägen", "Mit Sicherheit", "Unverändert aggressiv"],
-      "choices": ["a", "b", "c", "d"]
-    },
-    {
-      "q": "Wie triffst du den Ball meistens?",
-      "answers": ["Früh, vor dem Körper", "Etwas später, mit Schwung", "Sehr früh, attackierend", "Variabel, je nach Ball"],
-      "choices": ["a", "b", "c", "d"]
-    },
-    {
-      "q": "Wie oft spielst du pro Woche?",
-      "answers": ["1x", "2–3x", "4–5x", "6x oder mehr"],
-      "choices": ["a", "b", "c", "d"]
-    },
-    {
-      "q": "Was motiviert dich am meisten?",
-      "answers": ["Starker Spin & Rallys", "Power-Schläge & Winner", "Taktik & Kontrolle", "Gefühl & Variation"],
-      "choices": ["a", "b", "c", "d"]
-    },
-    {
-      "q": "Dein Lieblingsbelag?",
-      "answers": ["Sand", "Hartplatz", "Rasen", "Egal, Hauptsache spielen"],
-      "choices": ["a", "b", "c", "d"]
-    }
-  ],
-  "en": [
-    {
-      "q": "You hit a strong first serve, opponent blocks it short. What do you do?",
-      "answers": ["Go to the net for a volley", "Stay back and control", "Step in and attack", "Topspin drive crosscourt"],
-      "choices": ["a", "b", "c", "d"]
-    }
-  ]
-}
+[
+  {
+    "id": 1,
+    "text_de": "Wie würdest du deinen Spielstil beschreiben?",
+    "text_en": "How would you describe your playing style?",
+    "answers": [
+      { "text_de": "Ich spiele aggressiv von der Grundlinie", "text_en": "Aggressive from the baseline", "effects": { "Power": 2, "Topspin": 1 } },
+      { "text_de": "Ich spiele kontrolliert und platziere lieber", "text_en": "I play with control and placement", "effects": { "Control": 2, "Comfort": 1 } },
+      { "text_de": "Ich spiele gerne am Netz", "text_en": "I like to play at the net", "effects": { "Volleys": 2, "Touch / Feel": 1 } },
+      { "text_de": "Ich mische alles je nach Gegner", "text_en": "I mix things depending on opponent", "effects": { "Allround": 2 } }
+    ]
+  },
+  {
+    "id": 2,
+    "text_de": "Wie wichtig ist dir Komfort bzw. Armschonung?",
+    "text_en": "How important is comfort / arm friendliness?",
+    "answers": [
+      { "text_de": "Sehr wichtig – ich habe empfindlichen Arm", "text_en": "Very important – sensitive arm", "effects": { "Comfort": 3, "Stability": 1 } },
+      { "text_de": "Ein bisschen, aber Power ist wichtiger", "text_en": "A bit, but power is more important", "effects": { "Power": 2, "Comfort": 1 } },
+      { "text_de": "Ich spüre keine Probleme", "text_en": "No issues with comfort", "effects": { "Power": 2 } },
+      { "text_de": "Ich spiele mit jedem Schläger problemlos", "text_en": "I can handle any racquet", "effects": { "Maneuverability": 2 } }
+    ]
+  },
+  {
+    "id": 3,
+    "text_de": "Wie oft spielst du pro Woche?",
+    "text_en": "How often do you play per week?",
+    "answers": [
+      { "text_de": "1x oder weniger", "text_en": "Once or less", "effects": { "Comfort": 2 } },
+      { "text_de": "2–3x", "text_en": "2–3 times", "effects": { "Allround": 1 } },
+      { "text_de": "4–5x", "text_en": "4–5 times", "effects": { "Power": 1, "Control": 1 } },
+      { "text_de": "Täglich oder Leistungsspieler:in", "text_en": "Daily / competitive player", "effects": { "Control": 2, "Stability": 2 } }
+    ]
+  },
+  {
+    "id": 4,
+    "text_de": "Was ist dir bei einem Schläger am wichtigsten?",
+    "text_en": "What’s most important in a racquet?",
+    "answers": [
+      { "text_de": "Power und Spin", "text_en": "Power and spin", "effects": { "Power": 2, "Topspin": 2 } },
+      { "text_de": "Kontrolle und Präzision", "text_en": "Control and precision", "effects": { "Control": 2 } },
+      { "text_de": "Komfort und Armschonung", "text_en": "Comfort and arm safety", "effects": { "Comfort": 3 } },
+      { "text_de": "Gefühl und Touch", "text_en": "Touch and feel", "effects": { "Touch / Feel": 2, "Volleys": 1 } }
+    ]
+  },
+  {
+    "id": 5,
+    "text_de": "Wie alt bist du?",
+    "text_en": "How old are you?",
+    "answers": [
+      { "text_de": "Unter 18", "text_en": "Under 18", "effects": { "Maneuverability": 2, "Power": 2 } },
+      { "text_de": "18–35", "text_en": "18–35", "effects": { "Power": 1, "Control": 1 } },
+      { "text_de": "36–55", "text_en": "36–55", "effects": { "Comfort": 1, "Control": 1 } },
+      { "text_de": "Über 55", "text_en": "Over 55", "effects": { "Comfort": 3, "Power": 2 } }
+    ]
+  },
+  {
+    "id": 6,
+    "text_de": "Wie schwer darf dein Schläger maximal sein?",
+    "text_en": "How heavy should your racquet be?",
+    "answers": [
+      { "text_de": "Unter 280g (leicht)", "text_en": "Under 280g (light)", "effects": { "Maneuverability": 3, "Comfort": 1 } },
+      { "text_de": "280–300g (mittel)", "text_en": "280–300g (medium)", "effects": { "Allround": 1 } },
+      { "text_de": "300–320g (klassisch)", "text_en": "300–320g (classic)", "effects": { "Control": 2 } },
+      { "text_de": "Über 320g (schwer)", "text_en": "Over 320g (heavy)", "effects": { "Stability": 2, "Control": 1 } }
+    ]
+  },
+  {
+    "id": 7,
+    "text_de": "Wie erzeugst du am liebsten Spin?",
+    "text_en": "How do you generate spin?",
+    "answers": [
+      { "text_de": "Mit Topspin-Grundschlägen", "text_en": "With heavy topspin", "effects": { "Topspin": 3 } },
+      { "text_de": "Mit Slice und Variationen", "text_en": "With slice and variety", "effects": { "Slice": 3 } },
+      { "text_de": "Ich spiele eher flach", "text_en": "I play flat shots", "effects": { "Control": 2 } },
+      { "text_de": "Kaum Spin", "text_en": "Barely any spin", "effects": { "Power": 1, "Control": 1 } }
+    ]
+  },
+  {
+    "id": 8,
+    "text_de": "Wie würdest du deine Technik einschätzen?",
+    "text_en": "How would you rate your technique?",
+    "answers": [
+      { "text_de": "Fortgeschritten / sicher", "text_en": "Advanced / confident", "effects": { "Control": 2, "Stability": 1 } },
+      { "text_de": "Durchschnittlich", "text_en": "Average", "effects": { "Allround": 1 } },
+      { "text_de": "Anfänger", "text_en": "Beginner", "effects": { "Comfort": 2, "Power": 1 } },
+      { "text_de": "Ich spiele sehr intuitiv", "text_en": "Very intuitive", "effects": { "Touch / Feel": 2 } }
+    ]
+  }
+]
