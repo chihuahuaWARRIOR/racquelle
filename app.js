@@ -41,7 +41,9 @@ function showQuestion() {
   }
 
   const q = qList[currentQuestion];
-  document.getElementById("question").innerText = q.question;
+  
+  // 🔧 FIX: Feldname ist "q" statt "question"
+  document.getElementById("question").innerText = q.q;
 
   for (let i = 0; i < 4; i++) {
     const btn = document.getElementById(`a${i + 1}`);
