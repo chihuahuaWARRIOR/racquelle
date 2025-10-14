@@ -195,5 +195,97 @@ if (savedLang) {
 } else {
   loadQuestions();
 }
+// === Style-Erkennung auf Basis des Profils ===
+function getPlayerStyle(profile) {
+  const c = profile;
+  const avg = Object.values(c).reduce((a,b)=>a+b,0) / Object.values(c).length;
+
+  const styleScores = {
+    Control: c.Control + c.Comfort - c.Power,
+    Power: c.Power + c.Topspin - c.Control,
+    Allround: -Math.abs(c.Power - c.Control) + avg,
+    Offensive: c.Power + c.Serves + c.Volleys,
+    Defensive: c.Control + c.Topspin + c.Comfort,
+    Touch: c["Touch / Feel"] + c.Volleys + c.Maneuverability
+  };
+
+  const bestStyle = Object.entries(styleScores).sort((a,b)=>b[1]-a[1])[0][0];
+
+  const descriptions = {
+    Control: "Du bist ein präziser Spieler, der lieber sicher platziert als mit roher Gewalt punktet. Kontrolle, Stabilität und Technik sind deine größten Stärken.",
+    Power: "Du bist ein aggressiver Grundlinienspieler. Du suchst die Initiative, triffst früh und spielst mit viel Druck und Spin.",
+    Allround: "Du bist ein vielseitiger Allrounder. Egal ob Offensive oder Defensive – du passt dein Spiel intelligent der Situation an.",
+    Offensive: "Du bist ein offensiver All-Court-Spieler. Du suchst aktiv den Punktgewinn, kommst gerne ans Netz und spielst dynamisch.",
+    Defensive: "Du bist ein geduldiger Defensivspieler. Du läufst viele Bälle, spielst mit Spin und wartest, bis dein Gegner den Fehler macht.",
+    Touch: "Du bist ein gefühlvoller Spieler. Slice, Stopps und Volleys gehören zu deinem Repertoire – du gewinnst lieber mit Finesse als mit Power."
+  };
+
+  return { name: bestStyle, text: descriptions[bestStyle] };
+}
+
+// === Empfehlung anzeigen ===
+function showResults(profile, racket) {
+  const style = getPlayerStyle(profile);
+  const rc = document.getElementById("result-container");
+  document.getElementById("answers-grid").classList.add("hidden");
+  document.getElementById("question-container").classList.add("hidden");
+  rc.classList.remove("hidden");
+
+  rc.innerHTML = `
+    <div class="result-card">
+      <h2>${racket.name}</h2>
+      <img src="${racket.img}" alt="${racket.name}" />
+      <h3>Spielstil: ${style.name}</h3>
+      <p>${style.text}</p>
+
+      <div class="matrix">
+        ${Object.entries(profile).map(([k,v]) => `
+          <div class="matrix-row">
+            <span>${k}</span>
+            <div class="bar" style="--w:${v*10}%;"></div>
+          </div>`).join("")}
+      </div>
+
+      <p>Basierend auf deinem Stil empfehlen wir:</p>
+      <p><a href="${racket.url}" target="_blank">➡️ Zum Schläger</a></p>
+
+      <button class="btn-restart" onclick="restartQuiz()">Quiz neu starten</button>
+    </div>
+  `;
+}
+
+// === Optional: Modusauswahl ===
+function showModeSelection() {
+  const rc = document.getElementById("result-container");
+  rc.innerHTML = `
+    <div class="mode-select">
+      <h2>Wie soll die Schlägerempfehlung erfolgen?</h2>
+      <button onclick="calculateRecommendation('strengths')">Stärken ausbauen</button>
+      <button onclick="calculateRecommendation('weaknesses')">Schwächen ausgleichen</button>
+    </div>
+  `;
+}
+
+// === Racket-Matching ===
+function findBestRacket(profile, mode = "strengths") {
+  let best = null;
+  let bestScore = Infinity;
+  for (const r of rackets) {
+    let diff = 0;
+    for (const cat of Object.keys(r.stats)) {
+      const p = profile[cat] || 0;
+      if (mode === "strengths")
+        diff += Math.abs(p - r.stats[cat]);
+      else
+        diff += Math.abs((10 - p) - r.stats[cat]);
+    }
+    if (diff < bestScore) {
+      bestScore = diff;
+      best = r;
+    }
+  }
+  return best;
+}
+
 
 
