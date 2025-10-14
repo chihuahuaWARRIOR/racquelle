@@ -1,90 +1,157 @@
-[
-  {
-    "id": 1,
-    "text_de": "Wie würdest du deinen Spielstil beschreiben?",
-    "text_en": "How would you describe your playing style?",
-    "answers": [
-      { "text_de": "Ich spiele aggressiv von der Grundlinie", "text_en": "Aggressive from the baseline", "effects": { "Power": 2, "Topspin": 1 } },
-      { "text_de": "Ich spiele kontrolliert und platziere lieber", "text_en": "I play with control and placement", "effects": { "Control": 2, "Comfort": 1 } },
-      { "text_de": "Ich spiele gerne am Netz", "text_en": "I like to play at the net", "effects": { "Volleys": 2, "Touch / Feel": 1 } },
-      { "text_de": "Ich mische alles je nach Gegner", "text_en": "I mix things depending on opponent", "effects": { "Allround": 2 } }
-    ]
-  },
-  {
-    "id": 2,
-    "text_de": "Wie wichtig ist dir Komfort bzw. Armschonung?",
-    "text_en": "How important is comfort / arm friendliness?",
-    "answers": [
-      { "text_de": "Sehr wichtig – ich habe empfindlichen Arm", "text_en": "Very important – sensitive arm", "effects": { "Comfort": 3, "Stability": 1 } },
-      { "text_de": "Ein bisschen, aber Power ist wichtiger", "text_en": "A bit, but power is more important", "effects": { "Power": 2, "Comfort": 1 } },
-      { "text_de": "Ich spüre keine Probleme", "text_en": "No issues with comfort", "effects": { "Power": 2 } },
-      { "text_de": "Ich spiele mit jedem Schläger problemlos", "text_en": "I can handle any racquet", "effects": { "Maneuverability": 2 } }
-    ]
-  },
-  {
-    "id": 3,
-    "text_de": "Wie oft spielst du pro Woche?",
-    "text_en": "How often do you play per week?",
-    "answers": [
-      { "text_de": "1x oder weniger", "text_en": "Once or less", "effects": { "Comfort": 2 } },
-      { "text_de": "2–3x", "text_en": "2–3 times", "effects": { "Allround": 1 } },
-      { "text_de": "4–5x", "text_en": "4–5 times", "effects": { "Power": 1, "Control": 1 } },
-      { "text_de": "Täglich oder Leistungsspieler:in", "text_en": "Daily / competitive player", "effects": { "Control": 2, "Stability": 2 } }
-    ]
-  },
-  {
-    "id": 4,
-    "text_de": "Was ist dir bei einem Schläger am wichtigsten?",
-    "text_en": "What’s most important in a racquet?",
-    "answers": [
-      { "text_de": "Power und Spin", "text_en": "Power and spin", "effects": { "Power": 2, "Topspin": 2 } },
-      { "text_de": "Kontrolle und Präzision", "text_en": "Control and precision", "effects": { "Control": 2 } },
-      { "text_de": "Komfort und Armschonung", "text_en": "Comfort and arm safety", "effects": { "Comfort": 3 } },
-      { "text_de": "Gefühl und Touch", "text_en": "Touch and feel", "effects": { "Touch / Feel": 2, "Volleys": 1 } }
-    ]
-  },
-  {
-    "id": 5,
-    "text_de": "Wie alt bist du?",
-    "text_en": "How old are you?",
-    "answers": [
-      { "text_de": "Unter 18", "text_en": "Under 18", "effects": { "Maneuverability": 2, "Power": 2 } },
-      { "text_de": "18–35", "text_en": "18–35", "effects": { "Power": 1, "Control": 1 } },
-      { "text_de": "36–55", "text_en": "36–55", "effects": { "Comfort": 1, "Control": 1 } },
-      { "text_de": "Über 55", "text_en": "Over 55", "effects": { "Comfort": 3, "Power": 2 } }
-    ]
-  },
-  {
-    "id": 6,
-    "text_de": "Wie schwer darf dein Schläger maximal sein?",
-    "text_en": "How heavy should your racquet be?",
-    "answers": [
-      { "text_de": "Unter 280g (leicht)", "text_en": "Under 280g (light)", "effects": { "Maneuverability": 3, "Comfort": 1 } },
-      { "text_de": "280–300g (mittel)", "text_en": "280–300g (medium)", "effects": { "Allround": 1 } },
-      { "text_de": "300–320g (klassisch)", "text_en": "300–320g (classic)", "effects": { "Control": 2 } },
-      { "text_de": "Über 320g (schwer)", "text_en": "Over 320g (heavy)", "effects": { "Stability": 2, "Control": 1 } }
-    ]
-  },
-  {
-    "id": 7,
-    "text_de": "Wie erzeugst du am liebsten Spin?",
-    "text_en": "How do you generate spin?",
-    "answers": [
-      { "text_de": "Mit Topspin-Grundschlägen", "text_en": "With heavy topspin", "effects": { "Topspin": 3 } },
-      { "text_de": "Mit Slice und Variationen", "text_en": "With slice and variety", "effects": { "Slice": 3 } },
-      { "text_de": "Ich spiele eher flach", "text_en": "I play flat shots", "effects": { "Control": 2 } },
-      { "text_de": "Kaum Spin", "text_en": "Barely any spin", "effects": { "Power": 1, "Control": 1 } }
-    ]
-  },
-  {
-    "id": 8,
-    "text_de": "Wie würdest du deine Technik einschätzen?",
-    "text_en": "How would you rate your technique?",
-    "answers": [
-      { "text_de": "Fortgeschritten / sicher", "text_en": "Advanced / confident", "effects": { "Control": 2, "Stability": 1 } },
-      { "text_de": "Durchschnittlich", "text_en": "Average", "effects": { "Allround": 1 } },
-      { "text_de": "Anfänger", "text_en": "Beginner", "effects": { "Comfort": 2, "Power": 1 } },
-      { "text_de": "Ich spiele sehr intuitiv", "text_en": "Very intuitive", "effects": { "Touch / Feel": 2 } }
-    ]
-  }
-]
+{
+  "de": [
+    {
+      "q": "Wie alt bist du?",
+      "answers": [
+        { "text": "Unter 18", "effects": { "Power": 1, "Topspin": 1, "Stability": 1 } },
+        { "text": "18 bis 52", "effects": { "Control": 1, "Maneuverability": 1, "Touch / Feel": 1 } },
+        { "text": "52 bis 67", "effects": { "Comfort": 2, "Power": 1, "Stability": 1 } },
+        { "text": "Über 67", "effects": { "Comfort": 3, "Power": 2, "Stability": 2 } }
+      ]
+    },
+    {
+      "q": "Wie würdest du deinen Schwung beim Schlag beschreiben?",
+      "answers": [
+        { "text": "Weite, schnelle Ausholbewegung", "effects": { "Control": 2, "Stability": 1, "Topspin": 1 } },
+        { "text": "Mittlere, gleichmäßige Ausholbewegung", "effects": { "Allround": 1, "Maneuverability": 1, "Power": 1 } },
+        { "text": "Kurze, kompakte Ausholbewegung", "effects": { "Comfort": 1, "Power": 2, "Maneuverability": 1 } },
+        { "text": "Variiert stark je nach Schlag", "effects": { "Touch / Feel": 2, "Allround": 1 } }
+      ]
+    },
+    {
+      "q": "Wie identifizierst du dich?",
+      "answers": [
+        { "text": "Männlich", "effects": { "Control": 1, "Stability": 1 } },
+        { "text": "Weiblich", "effects": { "Power": 1, "Comfort": 1 } },
+        { "text": "Divers", "effects": { "Allround": 1 } },
+        { "text": "Keine Angabe", "effects": { "Allround": 1 } }
+      ]
+    },
+    {
+      "q": "Wie viel Gewicht bevorzugst du bei deinem Schläger?",
+      "answers": [
+        { "text": "Leicht (unter 285g)", "effects": { "Maneuverability": 2, "Comfort": 1 } },
+        { "text": "Mittel (285–305g)", "effects": { "Control": 1, "Power": 1 } },
+        { "text": "Schwer (über 305g)", "effects": { "Stability": 2, "Control": 1 } },
+        { "text": "Egal / weiß ich nicht", "effects": { "Allround": 1 } }
+      ]
+    },
+
+    {
+      "q": "Wie spielst du deine Grundschläge typischerweise?",
+      "answers": [
+        { "text": "Mit viel Spin und Höhe", "effects": { "Topspin": 2, "Power": 1 } },
+        { "text": "Flach und schnell", "effects": { "Control": 2, "Power": 1 } },
+        { "text": "Mit mittlerem Spin und Tempo", "effects": { "Allround": 1 } },
+        { "text": "Variabel, je nach Gegner", "effects": { "Touch / Feel": 1, "Allround": 1 } }
+      ]
+    },
+    {
+      "q": "Wie häufig gehst du ans Netz?",
+      "answers": [
+        { "text": "Sehr oft – ich beende viele Punkte dort", "effects": { "Volleys": 2, "Touch / Feel": 1 } },
+        { "text": "Gelegentlich, wenn sich die Chance bietet", "effects": { "Allround": 1, "Volleys": 1 } },
+        { "text": "Selten – ich bleibe lieber an der Grundlinie", "effects": { "Groundstrokes": 2, "Topspin": 1 } },
+        { "text": "Nie – ich fühle mich hinten wohler", "effects": { "Groundstrokes": 3 } }
+      ]
+    },
+    {
+      "q": "Wie startest du einen Ballwechsel am liebsten?",
+      "answers": [
+        { "text": "Mit einem aggressiven, schnellen Aufschlag", "effects": { "Serves": 2, "Power": 2 } },
+        { "text": "Mit einem kontrollierten Kick- oder Slice-Serve", "effects": { "Serves": 1, "Control": 1, "Topspin": 1 } },
+        { "text": "Ich spiele selten Aufschlagspiele (z. B. Doppel)", "effects": { "Volleys": 1, "Comfort": 1 } },
+        { "text": "Ich spiele lieber Returns", "effects": { "Returns": 2, "Control": 1 } }
+      ]
+    },
+    {
+      "q": "Wie reagierst du auf schnelle, tiefe Bälle deines Gegners?",
+      "answers": [
+        { "text": "Ich blocke sie sicher zurück", "effects": { "Stability": 2, "Control": 1 } },
+        { "text": "Ich gehe dagegen und kontere aggressiv", "effects": { "Power": 2, "Topspin": 1 } },
+        { "text": "Ich nehme Tempo raus", "effects": { "Comfort": 1, "Touch / Feel": 1 } },
+        { "text": "Kommt auf die Situation an", "effects": { "Allround": 1 } }
+      ]
+    },
+    {
+      "q": "Wie wichtig ist dir Komfort (Armschonung)?",
+      "answers": [
+        { "text": "Sehr wichtig – ich hatte schon Beschwerden", "effects": { "Comfort": 3, "Stability": 1 } },
+        { "text": "Eher wichtig – aber nicht entscheidend", "effects": { "Comfort": 2 } },
+        { "text": "Nicht besonders – ich mag direktes Feedback", "effects": { "Control": 1, "Power": 1 } },
+        { "text": "Egal / weiß ich nicht", "effects": { "Allround": 1 } }
+      ]
+    },
+    {
+      "q": "Wie viel Kontrolle suchst du in deinem Spiel?",
+      "answers": [
+        { "text": "Maximale Kontrolle – ich will jeden Ball platzieren", "effects": { "Control": 3, "Touch / Feel": 1 } },
+        { "text": "Ein ausgewogenes Verhältnis", "effects": { "Allround": 2 } },
+        { "text": "Ich vertraue auf Power und Spin", "effects": { "Power": 2, "Topspin": 1 } },
+        { "text": "Ich spiele nach Gefühl", "effects": { "Touch / Feel": 2 } }
+      ]
+    },
+    {
+      "q": "Wie wichtig ist dir Power vom Schläger?",
+      "answers": [
+        { "text": "Sehr wichtig – ich will leichte Länge erzeugen", "effects": { "Power": 3 } },
+        { "text": "Etwas Power, aber nicht zu viel", "effects": { "Power": 1, "Control": 1 } },
+        { "text": "Ich will die Power selbst erzeugen", "effects": { "Control": 2, "Stability": 1 } },
+        { "text": "Ich spiele lieber gefühlvoll", "effects": { "Touch / Feel": 2 } }
+      ]
+    },
+    {
+      "q": "Wie oft spielst du Slice oder Stoppbälle?",
+      "answers": [
+        { "text": "Sehr häufig – gehört zu meinem Repertoire", "effects": { "Slice": 3, "Touch / Feel": 1 } },
+        { "text": "Gelegentlich, um das Tempo zu brechen", "effects": { "Slice": 1, "Comfort": 1 } },
+        { "text": "Selten", "effects": { "Topspin": 1 } },
+        { "text": "Nie", "effects": {} }
+      ]
+    },
+    {
+      "q": "Wie beweglich bist du auf dem Platz?",
+      "answers": [
+        { "text": "Sehr schnell und agil", "effects": { "Maneuverability": 2, "Control": 1 } },
+        { "text": "Durchschnittlich beweglich", "effects": { "Allround": 1 } },
+        { "text": "Eher ruhig, ich positioniere mich gut", "effects": { "Stability": 1, "Comfort": 1 } },
+        { "text": "Ich spiele meist stationär", "effects": { "Comfort": 2 } }
+      ]
+    },
+    {
+      "q": "Wie oft spielst du pro Woche?",
+      "answers": [
+        { "text": "4x oder öfter", "effects": { "Control": 2, "Stability": 1 } },
+        { "text": "2–3x", "effects": { "Allround": 1, "Power": 1 } },
+        { "text": "1x", "effects": { "Comfort": 1 } },
+        { "text": "Seltener", "effects": { "Comfort": 2 } }
+      ]
+    },
+    {
+      "q": "Wie gehst du taktisch vor?",
+      "answers": [
+        { "text": "Ich baue Punkte geduldig auf", "effects": { "Control": 2, "Stability": 1 } },
+        { "text": "Ich spiele schnell und direkt", "effects": { "Power": 2, "Topspin": 1 } },
+        { "text": "Ich variiere oft", "effects": { "Touch / Feel": 2 } },
+        { "text": "Ich reagiere auf den Gegner", "effects": { "Allround": 2 } }
+      ]
+    },
+    {
+      "q": "Wie gut kannst du lange Ballwechsel aushalten?",
+      "answers": [
+        { "text": "Sehr gut – ich bin ausdauernd", "effects": { "Control": 1, "Comfort": 2 } },
+        { "text": "Geht so – lieber kürzere Punkte", "effects": { "Power": 2 } },
+        { "text": "Ich versuche sie zu vermeiden", "effects": { "Topspin": 1, "Power": 1 } },
+        { "text": "Ich genieße sie – mentale Stärke ist mein Vorteil", "effects": { "Stability": 1, "Control": 1 } }
+      ]
+    },
+    {
+      "q": "Wie oft nutzt du den Return als Waffe?",
+      "answers": [
+        { "text": "Sehr oft – ich greife den Aufschlag direkt an", "effects": { "Returns": 2, "Power": 1 } },
+        { "text": "Gelegentlich – mit viel Spin oder Kontrolle", "effects": { "Returns": 1, "Topspin": 1 } },
+        { "text": "Selten – ich blocke lieber zurück", "effects": { "Returns": 1, "Comfort": 1 } },
+        { "text": "Ich spiele kein Einzel / selten Returns", "effects": {} }
+      ]
+    }
+
