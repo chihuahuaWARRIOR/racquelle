@@ -3,6 +3,8 @@ let userProfile = {};
 let questions = {};
 let rackets = [];
 let lang = localStorage.getItem("language") || getLanguage();
+const BASE_SCORE = 50; // Neutraler Startwert (entspricht 5 auf einer 0–10-Skala)
+const SCALE_FACTOR = 5; // Verstärkung pro Antwortschritt
 
 // === Sprache automatisch erkennen ===
 function getLanguage() {
@@ -41,8 +43,6 @@ function showQuestion() {
   }
 
   const q = qList[currentQuestion];
-  
-  // 🔧 FIX: Feldname ist "q" statt "question"
   document.getElementById("question").innerText = q.q;
 
   for (let i = 0; i < 4; i++) {
@@ -75,7 +75,10 @@ function renderProgress() {
 // === Antwort speichern ===
 function selectAnswer(effects) {
   for (const [key, val] of Object.entries(effects)) {
-    userProfile[key] = (userProfile[key] || 0) + val;
+    // Starte bei 50 (entspricht 5 auf einer 0–10 Skala)
+    userProfile[key] = (userProfile[key] ?? BASE_SCORE) + (val * SCALE_FACTOR);
+    // Begrenze auf 0–100
+    userProfile[key] = Math.max(0, Math.min(100, userProfile[key]));
   }
   currentQuestion++;
   showQuestion();
@@ -83,31 +86,37 @@ function selectAnswer(effects) {
 
 // === Ergebnisse anzeigen (mit Overlay) ===
 function showResults() {
-  const qList = questions[lang];
   const overlay = document.createElement("div");
   overlay.id = "overlay";
-  overlay.style.position = "fixed";
-  overlay.style.top = "0";
-  overlay.style.left = "0";
-  overlay.style.width = "100%";
-  overlay.style.height = "100%";
-  overlay.style.background = "rgba(255,255,255,0.9)";
-  overlay.style.backdropFilter = "blur(6px)";
-  overlay.style.display = "flex";
-  overlay.style.flexDirection = "column";
-  overlay.style.alignItems = "center";
-  overlay.style.justifyContent = "center";
-  overlay.style.padding = "2rem";
-  overlay.style.zIndex = "2000";
-  overlay.style.textAlign = "center";
-  overlay.style.overflowY = "auto";
-  overlay.style.animation = "fadeIn 0.8s ease";
+  Object.assign(overlay.style, {
+    position: "fixed",
+    top: "0",
+    left: "0",
+    width: "100%",
+    height: "100%",
+    background: "rgba(255,255,255,0.9)",
+    backdropFilter: "blur(6px)",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "2rem",
+    zIndex: "2000",
+    textAlign: "center",
+    overflowY: "auto",
+    animation: "fadeIn 0.8s ease"
+  });
 
-  const bestRacket = findBestRacket(userProfile);
-  const styleDesc = getPlayStyleDescription(userProfile);
+  // Werte auf 0–10 umrechnen (Anzeige)
+  const normalizedProfile = {};
+  for (const [key, val] of Object.entries(userProfile)) {
+    normalizedProfile[key] = Math.round(val / 10);
+  }
 
-  // Matrix
-  const matrix = Object.entries(userProfile)
+  const bestRacket = findBestRacket(normalizedProfile);
+  const styleDesc = getPlayStyleDescription(normalizedProfile);
+
+  const matrix = Object.entries(normalizedProfile)
     .map(([key, val]) => `<tr><td>${key}</td><td>${val}</td></tr>`)
     .join("");
 
@@ -121,11 +130,13 @@ function showResults() {
       <h3>${lang === "de" ? "Spielstil" : "Play Style"}</h3>
       <p>${styleDesc}</p>
       <hr style="margin: 1.5rem 0;">
-      <h3>${lang === "de" ? "Dein Spielerprofil" : "Your Player Profile"}</h3>
+      <h3>${lang === "de" ? "Dein Spielerprofil (0–10)" : "Your Player Profile (0–10)"}</h3>
       <table style="margin:auto; border-collapse: collapse;">
         ${matrix}
       </table>
-      <button onclick="restartQuiz()" style="margin-top:2rem; background:black; color:white; padding:0.8rem 1.5rem; border:none; border-radius:12px; font-weight:bold;">${lang === "de" ? "Quiz neu starten" : "Restart Quiz"}</button>
+      <button onclick="restartQuiz()" style="margin-top:2rem; background:black; color:white; padding:0.8rem 1.5rem; border:none; border-radius:12px; font-weight:bold;">
+        ${lang === "de" ? "Quiz neu starten" : "Restart Quiz"}
+      </button>
     </div>
   `;
 
@@ -147,7 +158,7 @@ function getPlayStyleDescription(profile) {
     return lang === "de"
       ? "Du bist ein Allround-Spieler, der Präzision und Gefühl bevorzugt und in jeder Situation Lösungen findet."
       : "You're an all-court player valuing precision and touch, adapting to any situation.";
-  } else if (comfort > 3) {
+  } else if (comfort > 7) {
     return lang === "de"
       ? "Du spielst kontrolliert und effizient, achtest auf Armschonung und Konstanz."
       : "You play with control and efficiency, focusing on comfort and consistency.";
@@ -166,7 +177,7 @@ function findBestRacket(profile) {
     let diff = 0;
     for (const cat of Object.keys(r.stats)) {
       const p = profile[cat] || 0;
-      diff += Math.abs((p * 10) - (r.stats[cat] * 10));
+      diff += Math.abs(p - r.stats[cat]);
     }
     if (diff < bestScore) {
       bestScore = diff;
