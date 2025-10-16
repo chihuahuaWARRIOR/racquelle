@@ -99,7 +99,7 @@ function showResults() {
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    padding: "2rem",
+    padding: "3rem",
     zIndex: "2000",
     textAlign: "center",
     overflowY: "auto",
@@ -111,41 +111,53 @@ function showResults() {
     normalizedProfile[key] = Math.round(val) / 10;
   }
 
-  const { bestRackets, mode } = getTopRackets(normalizedProfile, matchMode);
+  const { bestRackets } = getTopRackets(normalizedProfile, matchMode);
   const bestRacket = bestRackets[0];
   const styleDesc = getPlayStyleDescription(normalizedProfile);
 
   const mainContent = `
-    <h2 style="margin-bottom:1rem;">🎾 ${lang === "de" ? "Deine Schlägerempfehlung" : "Your Racket Recommendation"}</h2>
-    <div id="matchModeBtns" style="margin-bottom:1rem;">
-      <button onclick="switchMatchMode('strength')" style="margin:0.3rem; padding:0.5rem 1rem; border:none; border-radius:10px; ${matchMode==='strength'?'background:black;color:white;':'background:white;color:black;'}">
+    <h2 style="margin-bottom:1.5rem; font-size:1.8rem;">${lang === "de" ? "Deine Schlägerempfehlung" : "Your Racket Recommendation"}</h2>
+    <div id="matchModeBtns" style="margin-bottom:2rem; display:flex; justify-content:center; gap:1rem;">
+      <button onclick="switchMatchMode('strength')" style="flex:1; max-width:220px; padding:1rem 1.5rem; border:none; border-radius:15px; font-size:1.1rem; font-weight:bold; ${matchMode==='strength'?'background:black;color:white;':'background:white;color:black;box-shadow:0 0 5px rgba(0,0,0,0.2);'}">
         ${lang === "de" ? "Stärken verbessern" : "Enhance strengths"}
       </button>
-      <button onclick="switchMatchMode('weakness')" style="margin:0.3rem; padding:0.5rem 1rem; border:none; border-radius:10px; ${matchMode==='weakness'?'background:black;color:white;':'background:white;color:black;'}">
+      <button onclick="switchMatchMode('weakness')" style="flex:1; max-width:220px; padding:1rem 1.5rem; border:none; border-radius:15px; font-size:1.1rem; font-weight:bold; ${matchMode==='weakness'?'background:black;color:white;':'background:white;color:black;box-shadow:0 0 5px rgba(0,0,0,0.2);'}">
         ${lang === "de" ? "Schwächen ausgleichen" : "Balance weaknesses"}
       </button>
     </div>
-    <div class="result-card" style="max-width:800px; width:90%; background:rgba(255,255,255,0.7); border-radius:20px; padding:2rem; box-shadow:0 4px 15px rgba(0,0,0,0.2);">
-      <img src="${bestRacket.img}" alt="${bestRacket.name}" style="max-width:180px; border-radius:10px; margin-bottom:1rem;">
-      <h3 id="racket-name">${bestRacket.name}</h3>
-      <p><a id="racket-link" href="${bestRacket.url}" target="_blank">➡️ ${lang === "de" ? "Mehr erfahren" : "Learn more"}</a></p>
-      <hr style="margin:1.5rem 0;">
+
+    <div class="result-card" style="max-width:1000px; width:95%; background:rgba(255,255,255,0.7); border-radius:25px; padding:2rem; box-shadow:0 4px 15px rgba(0,0,0,0.2);">
+      <div style="display:flex; justify-content:center; gap:2rem; flex-wrap:wrap;">
+        ${bestRackets.map((r, i) => `
+          <div onclick="updateRacketDisplay(${i})" style="cursor:pointer; flex:1; min-width:200px; max-width:260px; padding:1rem; border:${i===0?'2px solid black':'1px solid #ccc'}; border-radius:15px; background:${i===0?'rgba(0,0,0,0.05)':'white'};">
+            <img src="${r.img}" alt="${r.name}" style="width:100%; border-radius:10px;">
+            <h4 style="margin-top:0.5rem;">${r.name}</h4>
+            <p style="font-size:0.9rem;"><a href="${r.url}" target="_blank">${lang === "de" ? "Mehr erfahren" : "Learn more"}</a></p>
+          </div>
+        `).join("")}
+      </div>
+
+      <hr style="margin:2rem 0;">
+
+      <h3 style="margin-bottom:1rem;">${lang === "de" ? "Profilvergleich (0–10)" : "Profile Comparison (0–10)"}</h3>
+      <table id="profile-table" style="margin:auto; border-collapse:collapse;">
+        <thead>
+          <tr>
+            <th style="text-align:left; padding:6px 12px;">${lang === "de" ? "Dein Spielerprofil" : "Your Player Profile"}</th>
+            <th></th>
+            <th style="text-align:left; padding:6px 12px;">${lang === "de" ? "Schlägerprofil" : "Racket Profile"}</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${buildProfileTable(normalizedProfile, bestRacket.stats)}
+        </tbody>
+      </table>
+
+      <hr style="margin:2rem 0;">
       <h3>${lang === "de" ? "Spielstil" : "Play Style"}</h3>
       <p>${styleDesc}</p>
-      <hr style="margin:1.5rem 0;">
-      <h3>${lang === "de" ? "Profilvergleich (0–10)" : "Profile Comparison (0–10)"}</h3>
-      <table id="profile-table" style="margin:auto; border-collapse:collapse;">
-        ${buildProfileTable(normalizedProfile, bestRacket.stats)}
-      </table>
-      <div id="more-results" style="margin-top:1.5rem;">
-        <button id="toggleMoreBtn" onclick="toggleMoreRackets()" style="background:none; border:none; color:black; cursor:pointer; font-weight:bold;">
-          ${lang === "de" ? "Weitere Empfehlungen anzeigen ⬇️" : "Show more recommendations ⬇️"}
-        </button>
-        <div id="moreRackets" style="display:none; margin-top:1rem;">
-          ${buildMoreRackets(bestRackets)}
-        </div>
-      </div>
-      <button onclick="restartQuiz()" style="margin-top:2rem; background:black; color:white; padding:0.8rem 1.5rem; border:none; border-radius:12px; font-weight:bold;">
+
+      <button onclick="restartQuiz()" style="margin-top:2rem; background:black; color:white; padding:0.9rem 1.6rem; border:none; border-radius:12px; font-weight:bold;">
         ${lang === "de" ? "Quiz neu starten" : "Restart Quiz"}
       </button>
     </div>
@@ -155,36 +167,39 @@ function showResults() {
   document.body.appendChild(overlay);
 }
 
-// === Profilvergleich-Tabellenaufbau ===
+// === Profilvergleich-Tabelle ===
 function buildProfileTable(player, racketStats) {
   return Object.entries(player)
     .map(([key, val]) => `
-      <tr><td style="padding:4px 12px;">${key}</td>
-      <td style="padding:4px 12px;">${val.toFixed(1)}</td>
-      <td style="padding:4px 12px;">🎾 ${racketStats[key]?.toFixed(1) ?? '-'}</td></tr>
-    `).join("");
+      <tr>
+        <td style="padding:6px 12px;">${key}</td>
+        <td style="padding:6px 12px;">${val.toFixed(1)}</td>
+        <td style="padding:6px 12px;">${racketStats[key]?.toFixed(1) ?? '-'}</td>
+      </tr>
+    `)
+    .join("");
 }
 
-// === Weitere Empfehlungen ===
-function buildMoreRackets(rackets) {
-  return rackets.slice(1, 3).map((r, i) => `
-    <div style="margin:0.5rem 0;">
-      <img src="${r.img}" style="width:80px; border-radius:8px; vertical-align:middle;">
-      <span style="margin-left:1rem;">${r.name}</span>
-      <button onclick="updateRacketDisplay(${i + 1})" style="margin-left:1rem; background:black; color:white; border:none; border-radius:8px; padding:0.4rem 0.8rem;">
-        ${lang === "de" ? "Anzeigen" : "Show"}
-      </button>
-    </div>
-  `).join("");
-}
-
-// === Anzeige aktualisieren bei anderem Schläger ===
+// === Anzeige wechseln bei anderem Schläger ===
 function updateRacketDisplay(index) {
   const { bestRackets } = getTopRackets(normalizedProfileFromUser(), matchMode);
   const racket = bestRackets[index];
-  document.getElementById("racket-name").innerText = racket.name;
-  document.getElementById("racket-link").href = racket.url;
-  document.getElementById("profile-table").innerHTML = buildProfileTable(normalizedProfileFromUser(), racket.stats);
+  document.querySelectorAll(".result-card div[onclick]").forEach((el, i) => {
+    el.style.border = i === index ? "2px solid black" : "1px solid #ccc";
+    el.style.background = i === index ? "rgba(0,0,0,0.05)" : "white";
+  });
+  document.getElementById("profile-table").innerHTML = `
+    <thead>
+      <tr>
+        <th style="text-align:left; padding:6px 12px;">${lang === "de" ? "Dein Spielerprofil" : "Your Player Profile"}</th>
+        <th></th>
+        <th style="text-align:left; padding:6px 12px;">${lang === "de" ? "Schlägerprofil" : "Racket Profile"}</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${buildProfileTable(normalizedProfileFromUser(), racket.stats)}
+    </tbody>
+  `;
 }
 
 // === Hilfsfunktion für aktuelles Profil ===
@@ -192,19 +207,6 @@ function normalizedProfileFromUser() {
   const profile = {};
   for (const [k, v] of Object.entries(userProfile)) profile[k] = Math.round(v) / 10;
   return profile;
-}
-
-// === Ausklappen der zusätzlichen Schläger ===
-function toggleMoreRackets() {
-  const div = document.getElementById("moreRackets");
-  const btn = document.getElementById("toggleMoreBtn");
-  if (div.style.display === "none") {
-    div.style.display = "block";
-    btn.innerText = lang === "de" ? "Weitere Empfehlungen ausblenden ⬆️" : "Hide more recommendations ⬆️";
-  } else {
-    div.style.display = "none";
-    btn.innerText = lang === "de" ? "Weitere Empfehlungen anzeigen ⬇️" : "Show more recommendations ⬇️";
-  }
 }
 
 // === Matchmodus wechseln ===
@@ -215,7 +217,7 @@ function switchMatchMode(mode) {
   showResults();
 }
 
-// === Schlägervergleich (beide Modi) ===
+// === Schlägervergleich ===
 function getTopRackets(profile, mode) {
   const scores = rackets.map(r => {
     let diff = 0;
@@ -228,7 +230,7 @@ function getTopRackets(profile, mode) {
     return { racket: r, score: diff };
   });
   scores.sort((a, b) => a.score - b.score);
-  return { bestRackets: scores.slice(0, 3).map(s => s.racket), mode };
+  return { bestRackets: scores.slice(0, 3).map(s => s.racket) };
 }
 
 // === Spielstilbeschreibung ===
