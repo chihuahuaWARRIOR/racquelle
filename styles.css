@@ -104,6 +104,90 @@ body {
   margin-top: 20px;
 }
 
+/* === Branding-Inseln === */
+.brand-island {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.6); /* halbtransparent */
+  color: black;
+  padding: 8px 20px;
+  font-weight: 700;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-size: 1.4rem;
+  text-decoration: none;
+  backdrop-filter: blur(6px);
+}
+
+/* racquelle links oben */
+#brand {
+  top: 0;
+  left: 50px;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+/* Kein Unterstrich für Link */
+#brand a {
+  text-decoration: none;
+  color: black;
+}
+
+/* Sprache rechts oben */
+#lang-switch {
+  top: 0;
+  right: 50px;
+  display: flex;
+  gap: 6px;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.6);
+  padding: 6px 12px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  backdrop-filter: blur(6px);
+}
+
+#lang-switch button {
+  background: none;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  color: black;
+  padding: 4px 6px;
+  border-radius: 6px;
+  transition: background 0.2s;
+  font-size: 1rem;
+}
+
+#lang-switch button:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* " | " zwischen Sprachen */
+#lang-switch span {
+  color: black;
+  opacity: 0.6;
+}
+
+/* Impressum unten rechts – oben abgerundet, unten eckig */
+#footer-island {
+  position: fixed;
+  bottom: 0;
+  right: 30px;
+  background: rgba(255, 255, 255, 0.6);
+  padding: 8px 20px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: black;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  z-index: 10;
+  backdrop-filter: blur(6px);
+}
 
 /* === Responsives Verhalten === */
 @media (max-width: 768px) {
@@ -119,6 +203,24 @@ body {
     font-size: 1rem;
   }
 
+  .brand-island {
+    font-size: 1rem;
+    padding: 6px 14px;
+  }
+
+  #brand {
+    left: 20px;
+  }
+
+  #lang-switch {
+    right: 20px;
+    padding: 4px 10px;
+  }
+
+  #footer-island {
+    right: 20px;
+  }
+}
 /* ---------------------------
    Mobile-Fix: Fragebox nicht überlappen
    --------------------------- */
@@ -300,9 +402,6 @@ button.selected {
   opacity: 0.7;
   transform: scale(0.98);
 }
-
-
-
 
 
 
