@@ -3,13 +3,14 @@ let userProfile = {};
 let questions = {};
 let rackets = [];
 let lang = localStorage.getItem("language") || getLanguage();
-const BASE_SCORE = 50; // Neutraler Startwert (entspricht 5 auf einer 0–10-Skala)
-const SCALE_FACTOR = 5; // Verstärkung pro Antwortschritt
+const BASE_SCORE = 50;
+const SCALE_FACTOR = 5;
+let matchMode = "strength"; // "strength" oder "weakness"
 
 // === Sprache automatisch erkennen ===
 function getLanguage() {
   const navLang = navigator.language || navigator.userLanguage;
-  return navLang && navLang.startsWith && navLang.startsWith("de") ? "de" : "en";
+  return navLang.startsWith("de") ? "de" : "en";
 }
 
 // === Daten laden ===
@@ -28,8 +29,7 @@ async function loadData() {
     createBackButton();
   } catch (err) {
     console.error("Fehler beim Laden:", err);
-    const qEl = document.getElementById("question");
-    if (qEl) qEl.innerText = "Fehler beim Laden 😕";
+    document.getElementById("question").innerText = "Fehler beim Laden 😕";
   }
 }
 
@@ -44,25 +44,19 @@ function showQuestion() {
   }
 
   const q = qList[currentQuestion];
-  const qEl = document.getElementById("question");
-  if (qEl) qEl.innerText = q.q;
+  document.getElementById("question").innerText = q.q;
 
   for (let i = 0; i < 4; i++) {
     const btn = document.getElementById(`a${i + 1}`);
     const answer = q.answers[i];
-    if (btn && answer) {
-      btn.innerText = answer.text;
-      btn.onclick = () => selectAnswer(answer.effects);
-    }
+    btn.innerText = answer.text;
+    btn.onclick = () => selectAnswer(answer.effects);
   }
 
-  const pText = document.getElementById("progress-text");
-  if (pText) {
-    pText.innerText =
-      (lang === "de")
-        ? `Frage ${currentQuestion + 1} von ${qList.length}`
-        : `Question ${currentQuestion + 1} of ${qList.length}`;
-  }
+  document.getElementById("progress-text").innerText =
+    (lang === "de")
+      ? `Frage ${currentQuestion + 1} von ${qList.length}`
+      : `Question ${currentQuestion + 1} of ${qList.length}`;
   renderProgress();
 }
 
@@ -70,7 +64,6 @@ function showQuestion() {
 function renderProgress() {
   const bar = document.getElementById("progress-bar");
   const qList = questions[lang] || [];
-  if (!bar) return;
   bar.innerHTML = "";
   for (let i = 0; i < qList.length; i++) {
     const span = document.createElement("span");
@@ -83,17 +76,14 @@ function renderProgress() {
 // === Antwort speichern ===
 function selectAnswer(effects) {
   for (const [key, val] of Object.entries(effects)) {
-    // Starte bei BASE_SCORE (50) falls noch kein Wert existiert
-    // val kann Dezimalzahl oder negativ sein; SCALE_FACTOR bleibt aktiv
     userProfile[key] = (userProfile[key] ?? BASE_SCORE) + (val * SCALE_FACTOR);
-    // Begrenze auf 0–100
     userProfile[key] = Math.max(0, Math.min(100, userProfile[key]));
   }
   currentQuestion++;
   showQuestion();
 }
 
-// === Ergebnisse anzeigen (mit Overlay) ===
+// === Ergebnisse anzeigen ===
 function showResults() {
   const overlay = document.createElement("div");
   overlay.id = "overlay";
@@ -116,107 +106,129 @@ function showResults() {
     animation: "fadeIn 0.8s ease"
   });
 
-  // Werte auf 0–10 umrechnen (dezimal, z.B. 8.2)
   const normalizedProfile = {};
   for (const [key, val] of Object.entries(userProfile)) {
-    // val ist 0-100, wir wandeln in 0-10 (float)
-    normalizedProfile[key] = Math.round((val / 10) * 10) / 10; // eine Dezimalstelle
+    normalizedProfile[key] = Math.round(val) / 10;
   }
 
-  // initiales Matching: "Stärken verbessern" (ähnlichster Schläger)
-  const bestRacket = findBestRacket(normalizedProfile, "similar");
+  const { bestRackets, mode } = getTopRackets(normalizedProfile, matchMode);
+  const bestRacket = bestRackets[0];
   const styleDesc = getPlayStyleDescription(normalizedProfile);
 
-  const matrix = Object.entries(normalizedProfile)
-    .map(([key, val]) => `<tr><td style="padding:6px 10px;text-align:left;">${key}</td><td style="padding:6px 10px;text-align:right;">${val}</td></tr>`)
-    .join("");
-
-  overlay.innerHTML = `
-    <div id="result-card-inner" class="result-card" style="max-width: 600px; width: 90%; background: rgba(255,255,255,0.7); border-radius: 20px; padding: 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
-      <h2 style="margin-bottom:1rem;">🎾 ${lang === "de" ? "Deine Schlägerempfehlung" : "Your Racket Recommendation"}</h2>
-      <img id="best-racket-img" src="${bestRacket.img}" alt="${bestRacket.name}" style="max-width:180px; border-radius:10px; margin-bottom:1rem;">
-      <h3 id="best-racket-name">${bestRacket.name}</h3>
-      <p id="best-racket-link"><a href="${bestRacket.url}" target="_blank">➡️ ${lang === "de" ? "Mehr erfahren" : "Learn more"}</a></p>
-      <hr style="margin: 1.5rem 0;">
+  const mainContent = `
+    <h2 style="margin-bottom:1rem;">🎾 ${lang === "de" ? "Deine Schlägerempfehlung" : "Your Racket Recommendation"}</h2>
+    <div id="matchModeBtns" style="margin-bottom:1rem;">
+      <button onclick="switchMatchMode('strength')" style="margin:0.3rem; padding:0.5rem 1rem; border:none; border-radius:10px; ${matchMode==='strength'?'background:black;color:white;':'background:white;color:black;'}">
+        ${lang === "de" ? "Stärken verbessern" : "Enhance strengths"}
+      </button>
+      <button onclick="switchMatchMode('weakness')" style="margin:0.3rem; padding:0.5rem 1rem; border:none; border-radius:10px; ${matchMode==='weakness'?'background:black;color:white;':'background:white;color:black;'}">
+        ${lang === "de" ? "Schwächen ausgleichen" : "Balance weaknesses"}
+      </button>
+    </div>
+    <div class="result-card" style="max-width:800px; width:90%; background:rgba(255,255,255,0.7); border-radius:20px; padding:2rem; box-shadow:0 4px 15px rgba(0,0,0,0.2);">
+      <img src="${bestRacket.img}" alt="${bestRacket.name}" style="max-width:180px; border-radius:10px; margin-bottom:1rem;">
+      <h3 id="racket-name">${bestRacket.name}</h3>
+      <p><a id="racket-link" href="${bestRacket.url}" target="_blank">➡️ ${lang === "de" ? "Mehr erfahren" : "Learn more"}</a></p>
+      <hr style="margin:1.5rem 0;">
       <h3>${lang === "de" ? "Spielstil" : "Play Style"}</h3>
-      <p id="play-style-desc">${styleDesc}</p>
-      <hr style="margin: 1.5rem 0;">
-      <h3>${lang === "de" ? "Dein Spielerprofil (0–10)" : "Your Player Profile (0–10)"}</h3>
-      <table style="margin:auto; border-collapse: collapse;">
-        ${matrix}
+      <p>${styleDesc}</p>
+      <hr style="margin:1.5rem 0;">
+      <h3>${lang === "de" ? "Profilvergleich (0–10)" : "Profile Comparison (0–10)"}</h3>
+      <table id="profile-table" style="margin:auto; border-collapse:collapse;">
+        ${buildProfileTable(normalizedProfile, bestRacket.stats)}
       </table>
-
-      <div style="margin-top:1.5rem; display:flex; gap:0.75rem; justify-content:center; flex-wrap:wrap;">
-        <button id="btn-improve" style="background:black; color:white; padding:0.6rem 1rem; border:none; border-radius:10px; font-weight:bold; cursor:pointer;">
-          ${lang === "de" ? "Stärken verbessern" : "Improve strengths"}
+      <div id="more-results" style="margin-top:1.5rem;">
+        <button id="toggleMoreBtn" onclick="toggleMoreRackets()" style="background:none; border:none; color:black; cursor:pointer; font-weight:bold;">
+          ${lang === "de" ? "Weitere Empfehlungen anzeigen ⬇️" : "Show more recommendations ⬇️"}
         </button>
-        <button id="btn-compensate" style="background:#f1f1f1; color:black; padding:0.6rem 1rem; border:none; border-radius:10px; font-weight:bold; cursor:pointer;">
-          ${lang === "de" ? "Schwächen ausgleichen" : "Balance weaknesses"}
-        </button>
+        <div id="moreRackets" style="display:none; margin-top:1rem;">
+          ${buildMoreRackets(bestRackets)}
+        </div>
       </div>
-
-      <button id="restart-quiz" style="margin-top:1.25rem; background:black; color:white; padding:0.8rem 1.5rem; border:none; border-radius:12px; font-weight:bold;">
+      <button onclick="restartQuiz()" style="margin-top:2rem; background:black; color:white; padding:0.8rem 1.5rem; border:none; border-radius:12px; font-weight:bold;">
         ${lang === "de" ? "Quiz neu starten" : "Restart Quiz"}
       </button>
     </div>
   `;
 
+  overlay.innerHTML = mainContent;
   document.body.appendChild(overlay);
-
-  // Buttons anschließen
-  const btnImprove = document.getElementById("btn-improve");
-  const btnCompensate = document.getElementById("btn-compensate");
-  const btnRestart = document.getElementById("restart-quiz");
-
-  if (btnImprove) {
-    btnImprove.onclick = () => updateMatchDisplay(normalizedProfile, "similar");
-  }
-  if (btnCompensate) {
-    btnCompensate.onclick = () => updateMatchDisplay(normalizedProfile, "compensate");
-  }
-  if (btnRestart) {
-    btnRestart.onclick = () => restartQuiz();
-  }
-
-  // Mark initial mode visually (similar)
-  highlightModeButton("similar");
 }
 
-// === Update Anzeige nach Moduswahl ===
-function updateMatchDisplay(profile, mode) {
-  // finde besten Schläger für den gewählten Modus
-  const best = findBestRacket(profile, mode);
-  const nameEl = document.getElementById("best-racket-name");
-  const imgEl = document.getElementById("best-racket-img");
-  const linkEl = document.getElementById("best-racket-link");
-  const styleDescEl = document.getElementById("play-style-desc");
-
-  // Best Practice: Spielstilbeschreibung beibehalten (auf Basis des originalen Profils)
-  // (profile bleibt unverändert; Spielstil kann optional auch anders berechnet werden)
-
-  if (nameEl) nameEl.innerText = best.name;
-  if (imgEl) {
-    imgEl.src = best.img;
-    imgEl.alt = best.name;
-  }
-  if (linkEl) linkEl.innerHTML = `<a href="${best.url}" target="_blank">➡️ ${lang === "de" ? "Mehr erfahren" : "Learn more"}</a>`;
-
-  // Visuelle Hervorhebung des aktiven Modus
-  highlightModeButton(mode);
+// === Profilvergleich-Tabellenaufbau ===
+function buildProfileTable(player, racketStats) {
+  return Object.entries(player)
+    .map(([key, val]) => `
+      <tr><td style="padding:4px 12px;">${key}</td>
+      <td style="padding:4px 12px;">${val.toFixed(1)}</td>
+      <td style="padding:4px 12px;">🎾 ${racketStats[key]?.toFixed(1) ?? '-'}</td></tr>
+    `).join("");
 }
 
-// === Visuelle Hervorhebung der Buttons ===
-function highlightModeButton(mode) {
-  const btnImprove = document.getElementById("btn-improve");
-  const btnCompensate = document.getElementById("btn-compensate");
-  if (btnImprove) {
-    btnImprove.style.background = mode === "similar" ? "black" : "#f1f1f1";
-    btnImprove.style.color = mode === "similar" ? "white" : "black";
+// === Weitere Empfehlungen ===
+function buildMoreRackets(rackets) {
+  return rackets.slice(1, 3).map((r, i) => `
+    <div style="margin:0.5rem 0;">
+      <img src="${r.img}" style="width:80px; border-radius:8px; vertical-align:middle;">
+      <span style="margin-left:1rem;">${r.name}</span>
+      <button onclick="updateRacketDisplay(${i + 1})" style="margin-left:1rem; background:black; color:white; border:none; border-radius:8px; padding:0.4rem 0.8rem;">
+        ${lang === "de" ? "Anzeigen" : "Show"}
+      </button>
+    </div>
+  `).join("");
+}
+
+// === Anzeige aktualisieren bei anderem Schläger ===
+function updateRacketDisplay(index) {
+  const { bestRackets } = getTopRackets(normalizedProfileFromUser(), matchMode);
+  const racket = bestRackets[index];
+  document.getElementById("racket-name").innerText = racket.name;
+  document.getElementById("racket-link").href = racket.url;
+  document.getElementById("profile-table").innerHTML = buildProfileTable(normalizedProfileFromUser(), racket.stats);
+}
+
+// === Hilfsfunktion für aktuelles Profil ===
+function normalizedProfileFromUser() {
+  const profile = {};
+  for (const [k, v] of Object.entries(userProfile)) profile[k] = Math.round(v) / 10;
+  return profile;
+}
+
+// === Ausklappen der zusätzlichen Schläger ===
+function toggleMoreRackets() {
+  const div = document.getElementById("moreRackets");
+  const btn = document.getElementById("toggleMoreBtn");
+  if (div.style.display === "none") {
+    div.style.display = "block";
+    btn.innerText = lang === "de" ? "Weitere Empfehlungen ausblenden ⬆️" : "Hide more recommendations ⬆️";
+  } else {
+    div.style.display = "none";
+    btn.innerText = lang === "de" ? "Weitere Empfehlungen anzeigen ⬇️" : "Show more recommendations ⬇️";
   }
-  if (btnCompensate) {
-    btnCompensate.style.background = mode === "compensate" ? "black" : "#f1f1f1";
-    btnCompensate.style.color = mode === "compensate" ? "white" : "black";
-  }
+}
+
+// === Matchmodus wechseln ===
+function switchMatchMode(mode) {
+  matchMode = mode;
+  const overlay = document.getElementById("overlay");
+  if (overlay) overlay.remove();
+  showResults();
+}
+
+// === Schlägervergleich (beide Modi) ===
+function getTopRackets(profile, mode) {
+  const scores = rackets.map(r => {
+    let diff = 0;
+    for (const cat of Object.keys(r.stats)) {
+      const playerVal = profile[cat] ?? 0;
+      const racketVal = r.stats[cat] ?? 0;
+      const target = mode === "weakness" ? (10 - playerVal) : playerVal;
+      diff += Math.abs(target - racketVal);
+    }
+    return { racket: r, score: diff };
+  });
+  scores.sort((a, b) => a.score - b.score);
+  return { bestRackets: scores.slice(0, 3).map(s => s.racket), mode };
 }
 
 // === Spielstilbeschreibung ===
@@ -226,7 +238,6 @@ function getPlayStyleDescription(profile) {
   const comfort = profile.Comfort || 0;
   const maneuver = profile.Maneuverability || 0;
 
-  // Beachte: profile ist auf 0-10 Skala (dezimal)
   if (power > control && maneuver > comfort) {
     return lang === "de"
       ? "Du bist ein aggressiver Baseliner, der Druck von der Grundlinie aus aufbaut und das Tempo bestimmt."
@@ -246,51 +257,8 @@ function getPlayStyleDescription(profile) {
   }
 }
 
-// === Schlägervergleich ===
-// mode: "similar" (default) -> sucht Schläger, die dem Spieler ähnlich sind (minimiert Differenz)
-// mode: "compensate" -> zielt darauf ab, Spieler-Schwächen auszugleichen
-function findBestRacket(profile, mode = "similar") {
-  let best = null;
-  let bestScore = Infinity;
-
-  // Für jede Racket in der Liste
-  for (const r of rackets) {
-    let diff = 0;
-
-    // r.stats erwartet Werte auf 0-10 (dezimal möglich)
-    for (const cat of Object.keys(r.stats)) {
-      const playerVal = profile[cat] ?? 5.0; // falls Kategorie fehlt, neutral annehmen
-      const racketVal = r.stats[cat] ?? 5.0;
-
-      if (mode === "similar") {
-        // klassisches Matching: je näher, desto besser
-        diff += Math.abs(playerVal - racketVal);
-      } else if (mode === "compensate") {
-        // Schwächen ausgleichen:
-        // Zielwert = 10 - playerVal  (d.h. wenn Spieler niedrig ist, Ziel ist hoch)
-        // Wir messen die Distanz zwischen Zielwert und Schlägerwert:
-        const target = Math.max(0, Math.min(10, 10 - playerVal));
-        diff += Math.abs(target - racketVal);
-      } else {
-        // Fallback: similar
-        diff += Math.abs(playerVal - racketVal);
-      }
-    }
-
-    // Gesamtdifferenz: kleiner = besser
-    if (diff < bestScore) {
-      bestScore = diff;
-      best = r;
-    }
-  }
-
-  return best || rackets[0];
-}
-
 // === Zurück-Button ===
 function createBackButton() {
-  const existing = document.getElementById("back-button");
-  if (existing) return; // nicht doppelt erstellen
   const btn = document.createElement("div");
   btn.id = "back-button";
   btn.innerHTML = "&#8592;";
