@@ -19,7 +19,7 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -80%);
+  transform: translate(-50%, -50%);
   text-align: center;
   z-index: 2;
   color: #222;
@@ -117,20 +117,6 @@ body {
   font-size: 1.4rem;
   text-decoration: none;
   backdrop-filter: blur(6px);
-}
-
-/* racquelle links oben */
-#brand {
-  top: 0;
-  left: 50px;
-  z-index: 10;
-  background: rgba(255, 255, 255, 0.6);
-}
-
-/* Kein Unterstrich für Link */
-#brand a {
-  text-decoration: none;
-  color: black;
 }
 
 /* Sprache rechts oben */
@@ -402,3 +388,4 @@ button.selected {
   opacity: 0.7;
   transform: scale(0.98);
 }
+
