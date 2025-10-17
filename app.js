@@ -28,13 +28,18 @@ async function loadData() {
     questions = qData;
     rackets = rData;
 
-    // Brand Insel anpassen (oben links)
-    const brandEl = document.getElementById("brand");
-    if (brandEl) {
-      // falls es ein Link/Element mit innerHTML gibt
-      brandEl.innerHTML = `Your Game. <b>YourRacket.</b>`;
-      brandEl.style.textDecoration = "none";
-    }
+const brandEl = document.getElementById("brand");
+if (brandEl) {
+  // Branding-Text setzen
+  brandEl.innerHTML = `Your Game. <b>YourRacket.</b>`;
+  brandEl.style.textDecoration = "none";
+  brandEl.style.cursor = "pointer";
+
+  // Klick auf Branding-Insel -> Quiz neu starten
+  brandEl.addEventListener("click", () => {
+    restartQuiz();
+  });
+}
 
     // Impressum verlinken (footer-island wenn vorhanden)
     createImpressumHook();
@@ -686,3 +691,4 @@ function restartQuiz() {
 
 // === Init ===
 loadData();
+
