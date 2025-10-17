@@ -602,7 +602,7 @@ function createBackButton() {
   Object.assign(btn.style, {
     position: "fixed",
     left: "8px",
-    top: "40%",
+    top: "50%",
     transform: "translateY(-50%)",
     width: "38px",
     height: "38px",
@@ -691,4 +691,5 @@ function restartQuiz() {
 
 // === Init ===
 loadData();
+
 
