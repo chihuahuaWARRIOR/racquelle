@@ -19,7 +19,7 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -80%);
   text-align: center;
   z-index: 2;
   color: #222;
@@ -119,17 +119,19 @@ body {
   backdrop-filter: blur(6px);
 }
 
-/* Brand-Insel oben links */
-
+/* racquelle links oben */
 #brand {
-  position: fixed;
-  top: 18px;
-  left: 20px;
-  font-weight: 600;
-  font-size: 1.1rem;
-  z-index: 1100;
-  color: #000;
+  top: 0;
+  left: 50px;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.6);
+}
 
+/* Kein Unterstrich für Link */
+#brand a {
+  text-decoration: none;
+  color: black;
+}
 
 /* Sprache rechts oben */
 #lang-switch {
@@ -400,5 +402,3 @@ button.selected {
   opacity: 0.7;
   transform: scale(0.98);
 }
-
-
